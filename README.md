@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/TryUps/MyBlog/blob/main/.github/images/logo.png">
+  <img src="https://github.com/TryUps/MyBlog/blob/develop/.github/images/logo.png">
 </p>
 <p align="center">
   <i>A simple blog experience.</i>
