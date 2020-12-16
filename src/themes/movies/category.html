@@ -1,0 +1,25 @@
+import 'layout/header';
+<main class="container">
+  <section class="row">
+    <h2>%category%</h2>
+  </section>
+  <section class="articles row">
+    <%catch 'post' from 'posts-by-cat' %>
+      <article class="card col-sm-6 mx-2" style="width: 20rem; padding: 0;">
+        <img src="https://w.wallhaven.cc/full/ox/wallhaven-oxkjgm.jpg" class="card-img-top" alt="%post:title%">
+        <div class="card-body">
+          <h5 class="card-title">%post:title%</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Filme, Comédia</h6>
+          <p class="card-text">text::limit('%post:summary%', 150)</p>
+        </div>
+        <div class="card-footer">
+          <a href="%post:url%" class="btn btn-primary">Read more...</a>
+        </div>
+      </article>
+      <%not catch%>
+        <p>Filme não encontrado.</p>
+      <%not catch%>
+    <%catch%>
+  </section>
+</main>
+import 'layout/footer';

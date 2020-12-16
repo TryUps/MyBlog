@@ -1,0 +1,17 @@
+{
+  "language.en_US": {
+    "dash.login": {
+      "login": "Entrar"
+    },
+    "dash.home": {
+      "hello_world": "Hello World",
+      "hello_use": "Hello, %s"
+    },
+    "error": {
+      "404": {
+        "title": "Error %s",
+        "message": "Error %s not found. \n Page: %s"
+      }
+    }
+  }
+}

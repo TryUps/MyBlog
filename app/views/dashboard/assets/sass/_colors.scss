@@ -1,0 +1,27 @@
+.bg-yellow {
+  background-color: #FBF448 !important;
+  border-color: #FBF448 !important;
+}
+
+.blue {
+  color: #0A0C45;
+}
+
+.border-box {
+  position: relative;
+}
+
+.border-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  margin: -1.8px;
+  /* !importanté */
+  border-radius: inherit;
+  /* !importanté */
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}

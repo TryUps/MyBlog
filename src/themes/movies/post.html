@@ -1,0 +1,11 @@
+import 'layout/header';
+  <main class="container">
+    <section class="article">
+      <%catch 'post' from 'single-post' %>
+        <article>
+          <h1>%post:title%</h1>
+        </article>
+      <%catch%>
+    </section>
+  </main>
+import 'layout/footer';

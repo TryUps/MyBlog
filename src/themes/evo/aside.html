@@ -1,0 +1,24 @@
+<aside>
+  <div class="cats">
+    <h3>Categorias</h3>
+    <ul>
+      <%catch 'cat' from 'category' %>
+        <li><a href="%cat:url%">%cat:name%</a></li>
+        <%not catch%>
+          <p>No categories found.</p>
+        <%not catch%>
+      <%catch%>
+    </ul>
+  </div>
+  <div class="tags">
+    <h3>Tags</h3>
+    <ul>
+      <%catch 'tag' from 'tags' %>
+        <li>%tag:name%</li>
+        <%not catch%>
+          <p>No categories found.</p>
+        <%not catch%>
+      <%catch%>
+    </ul>
+  </div>
+</aside>

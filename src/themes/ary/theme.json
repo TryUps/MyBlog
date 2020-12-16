@@ -1,0 +1,15 @@
+{
+  "theme": "Ary",
+  "description": "Ary Sinteco Tema",
+  "themeURL": "https://store.myblog.ml/theme/5-ary.html",
+  "author": {
+    "name": "Arilson Bolivar",
+    "contact": "arilsonb@gmail.com",
+    "website": "https://arysinteco.ml"
+  },
+  "static": {
+    "stylesheet": "./css",
+    "javascript": "./js",
+    "images": "./img"
+  }
+}

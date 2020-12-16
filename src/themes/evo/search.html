@@ -1,0 +1,26 @@
+import 'header';
+<main>
+  <section>
+    <div class="search-bar">
+      Pesquisar: <input type="search" name="" id="" placeholder="Resultados para: %search:term%">
+      <div class="">
+        Resultados: %search:results%
+      </div>
+    </div>
+    <%catch 'post' from 'search-posts' %>
+      <article>
+        <div class="post-title">
+          <a href="%post:url%"><h1>%post:title%</h1></a>
+          <time datetime="%post:date%">%post:date%</time>
+        </div>
+        <div class="post-content">%post:summary%</div>
+        <div class="post-footer"></div>
+      </article>
+      <%not catch%>
+        Não foi possível encontrar resultados para '%search:term%' neste blog.
+      <%not catch%>
+    <%catch%>
+  </section>
+  import 'aside';
+</main>
+import 'footer';

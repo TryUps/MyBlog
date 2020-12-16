@@ -1,0 +1,15 @@
+{
+  "name": "Evo",
+  "version": "1.0.0-alpha.1",
+  "author": {
+    "name": "MyBlog Team",
+    "email": "myblog@tryups.ml",
+    "website": "https://myblog.tryups.ml/"
+  },
+  "dependencies": {},
+  "assets": {
+    "css": "./assets/css",
+    "js": "./assets/js",
+    "img": "./assets/images"
+  }
+}

@@ -1,0 +1,48 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Nunito", sans-serif;
+  font-size: 100%;
+  background: #f1f2f6;
+}
+
+main {
+  width: 650px;
+  height: 350px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+}
+main .install-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+main .install-title h1 {
+  display: flex;
+  font-size: 1.6rem;
+  color: #0A0C45;
+  letter-spacing: 1.1px;
+  font-weight: 600;
+  flex-direction: row;
+}
+main .install-title h1 .logo {
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+main .install-title small {
+  font-size: 0.9rem;
+  margin-top: 2px;
+  margin-left: 1px;
+  font-weight: 600;
+  letter-spacing: 1.02px;
+  color: #777;
+}
+main .container {
+  margin-top: 40px;
+}

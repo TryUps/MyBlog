@@ -1,0 +1,20 @@
+import 'header';
+  <main class="container">
+    <section class="posts">
+      <%catch 'post' from 'posts' mode='latest' limit="0,10" %>
+        <article>
+          <div class="post-title">
+            <a href="%post:url%"><h1>%post:title%</h1></a>
+            <time datetime="%post:date%">%post:date%</time>
+          </div>
+          <div class="post-content">%post:summary%</div>
+          <div class="post-footer"></div>
+        </article>
+        <%not catch%>
+          <p>Não foi possível encontrar nenhuma postagem.</p>
+        <%not catch%>
+      <%catch%>
+    </section>
+    import 'aside';
+  </main>
+import 'footer';

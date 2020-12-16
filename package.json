@@ -1,0 +1,20 @@
+{
+    "name": "myblog",
+    "productName": "MyBlog",
+    "description": "A new blog!",
+    "version": "0.0.1-alpha.1",
+    "versionName": "Undefined",
+    "author": "TryUps Inc.",
+    "homepage": "https://www.tryups.ml/myblog/",
+    "license": "GPL-3.0-or-later",
+    "keywords": [
+        "myb"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tryups/MyBlog.git"
+    },
+    "bugs": {
+        "url": "https://github.com/tryups/MyBlog/issues"
+    }
+}

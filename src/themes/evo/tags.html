@@ -1,0 +1,20 @@
+import 'header';
+  <main class="container">
+    <section>
+      <%catch 'post' from 'posts-by-tag' %>
+        <article>
+          <div class="post-title">
+            <a href="%post:url%"><h1>%post:title%</h1></a>
+            <time datetime="%post:date%">%post:date%</time>
+          </div>
+          <div class="post-content">%post:summary%</div>
+          <div class="post-footer"></div>
+        </article>
+        <%not catch%>
+          Não foi possivel localizar postagens nesta tag.
+        <%not catch%>
+      <%catch%>
+    </section>
+    import 'aside';
+  </main>
+import 'footer';
