@@ -57,10 +57,6 @@
       ifrDoc.execCommand(cmd, false, value);
       ifrDoc.body.focus();
     }
-
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-  });
 
 })();

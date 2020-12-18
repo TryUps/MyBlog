@@ -177,7 +177,7 @@ class Template extends templateSettings {
 
 	private function include($file = null){
 		$file = $file ? $file : $this->getVar('*');
-		$pattern = "#<%include ['\"](.*)['\"];%>#";
+		$pattern = "#<Include ['\"](.*)['\"]/>#";
 		if (preg_match_all($pattern, $file, $results, PREG_SET_ORDER)) {
 			foreach ($results as &$require) {
 				$turned = $require[1];
@@ -201,7 +201,7 @@ class Template extends templateSettings {
 
 	private function loop($file = null, Array $loop_array = array()) {
 		$file = $file ? $file : $this->getVar('*');
-		$pattern = "@<loop (?P<var>[a-zA-Z]+) in (?P<array>[a-zA-Z]+)>\s*(\s*.*?\s*)</loop>@si";
+		$pattern = "@<Loop (?P<var>[a-zA-Z]+) in (?P<array>[a-zA-Z]+)>\s*(\s*.*?\s*)</Loop>@si";
 		preg_match_all($pattern, $file, $results, PREG_SET_ORDER);
 		foreach ($results as $result) {
 			$results = array();
@@ -229,10 +229,14 @@ class Template extends templateSettings {
 		return $file = $this->setVar("*", $file);
 	}
 
-	private function if($file){
+	private function if($file = null){
 		$file = $file ? $file : $this->getVar('*');
-		$pattern = "@<if (?<primaryCondition>[a-zA-Z]+) (?<condition>[<-=-=->]+) (?P<secondaryCondition>[a-zA-Z]+)>\s*(\s*.*?\s*)</endif>@si";
-		preg_match_all($pattern, $file, $results, PREG_SET_ORDER);
+		$pattern = "@<If (?<primaryCondition>[a-zA-Z]+) (?<condition>[<-=-=->]+) (?P<secondaryCondition>[a-zA-Z]+)>\s*(\s*.*?\s*)</EndIf>@si";
+		if(preg_match_all($pattern, $file, $results, PREG_SET_ORDER)){
+			return var_dump($results);
+		}else{
+			return;
+		}
 	}
 
 	private function catch($file = null){
@@ -338,6 +342,9 @@ class Template extends templateSettings {
 							break;
 						case 'date':
 							$return = $this->generate_date_format($result['date']);
+							break;
+						case 'datetime':
+							return 'not found';
 							break;
 						default:
 							if(!isset($result[$m[1]])){
@@ -449,6 +456,7 @@ class Template extends templateSettings {
 		$this->catch();
 		$this->widgets();
 		$this->replaceVars();
+		$this->if();
 		$this->textLimit();
 		$this->templateFunctions();
 

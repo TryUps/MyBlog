@@ -85,13 +85,18 @@ class Blog {
 		if(isset($_GET['q']) || !empty($_GET['q'])){
 			return $this->template->render('search.html');
 		}else{
-			return Error::get(404);
+			$this->template->var("searchHome", true);
+			return $this->template->render('search.html');
 		}
 	}
 
 	private function renderStatic(){
-		$blog_template = Preferences::{'blog_template'}();
-		return StaticFiles::{"./src/themes/$blog_template"}("./assets/".$this->params['file']);
+		if(isset($this->params['file']) || !empty($this->params['file'])){
+			$blog_template = Preferences::{'blog_template'}();
+			return StaticFiles::{"./src/themes/$blog_template"}("./assets/".$this->params['file']);
+		}else{
+			return Error::get(404);
+		}
 	}
 
 	public function __destruct() {
@@ -118,7 +123,7 @@ class Blog {
 			return $this->renderStatic();
 			break;
 		default:
-			echo "aaaa";
+			return Error::get(404);
 			break;
 		}
 	}
