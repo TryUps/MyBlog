@@ -10,6 +10,7 @@ class Template extends templateSettings {
 	private $template;
 	private $file;
 	protected $values = [];
+	protected static $valuesS = [];
 	private static $instance;
 	private $db;
 	private $realpaths;
@@ -40,8 +41,11 @@ class Template extends templateSettings {
 		return self::$instance;
 	}
 
-	public function setVar($name = "*", $value = null) {
-		return $this->values["%" . $name . "%"] = $value;
+	public function setVar($name = "*", $value = null): bool
+	{
+		self::$valuesS["%" . $name . "%"] = $value;
+		$this->values["%" . $name . "%"] = $value;
+		return true;
 	}
 
 	public function getVar($name) {
@@ -57,6 +61,16 @@ class Template extends templateSettings {
 			$file = @str_replace($var, $value, $file);
 		}
 		$this->setVar("*", $file);
+	}
+
+	public static function replaceVar($string){
+		foreach (self::$valuesS as $var => $value) {
+			if($string = str_replace($var, $value, $string)){
+				return $string;
+			}else{
+				return false;
+			}
+		}
 	}
 
 	public function __set($name, $value) {

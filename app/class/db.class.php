@@ -103,7 +103,7 @@ class DB extends DBConfig {
         $sql = "SELECT * FROM $table WHERE ($wheres)";
         $sth = $this->db->prepare($sql);
         foreach($where as $key => &$val){
-          $sth->bindValue(":" . $key, $val, $this->getType($val));
+          $sth->bindValue(":" . $key, $this->filter($val), $this->getType($val));
         }
       }
 
@@ -138,6 +138,12 @@ class DB extends DBConfig {
 
   public function count($table){
     return sizeof($table);
+  }
+
+  private function filter($val){
+    if(is_string($val))return filter_var($val, FILTER_SANITIZE_STRING);
+    if(is_int($val))return filter_var($val, FILTER_SANITIZE_NUMBER_INT);
+    if(is_bool($val))return $val;
   }
 
   private function getType($val){

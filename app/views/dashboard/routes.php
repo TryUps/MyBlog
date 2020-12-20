@@ -16,6 +16,10 @@
     require __DIR__ . '/pages/CreateArticle.php';
   });
 
+  Router::Route('/category', function() use($user){
+    require __DIR__ . '/pages/Category.php';
+  });
+
   Router::Route('/preferences', function() use($user){
     require __DIR__ . '/pages/Preferences.php';
   });

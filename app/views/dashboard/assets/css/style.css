@@ -295,6 +295,7 @@ main .container {
   flex-direction: column;
   overflow-y: auto;
   max-height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
   padding: 0px 30px;
   flex: 1;
 }
@@ -955,6 +956,45 @@ button.ico-btn span, a.ico-btn span {
   font-weight: 600;
   left: 10px;
   font-size: 0.95rem;
+}
+
+.search-cat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.search-cat form > input {
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  min-width: 350px;
+}
+
+table.category-list {
+  position: relative;
+  width: 100%;
+  border-collapse: collapse;
+}
+table.category-list td, table.category-list th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+table.category-list th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  text-align: left;
+  background-color: #eee;
+  color: #777;
+  font-weight: bold;
+}
+table.category-list td {
+  min-height: 25px;
+}
+table.category-list tr:hover {
+  background-color: #ddd;
 }
 
 .bg-yellow {

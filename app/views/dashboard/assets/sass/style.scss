@@ -332,7 +332,9 @@ main {
     flex-direction: column;
     overflow-y: auto;
     max-height: calc(100vh - 60px);
+    min-height: calc(100vh - 60px);
     padding: 0px 30px;
+    
     flex: 1;
 
     .home-title {
@@ -1097,6 +1099,50 @@ button.ico-btn, a.ico-btn {
       }*/
     }
 
+  }
+}
+
+.search-cat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  form > input {
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    min-width: 350px;
+  }
+}
+
+table.category-list {
+  position: relative;
+  width: 100%;
+  border-collapse: collapse;
+
+  td, th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  th {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: left;
+    background-color: #eee;
+    color: #777;
+    font-weight: bold;
+  }
+
+  td {
+    min-height: 25px;
+  }
+
+  tr:hover {
+    background-color: #ddd;
   }
 }
 

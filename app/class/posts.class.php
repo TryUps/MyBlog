@@ -7,13 +7,15 @@ class Posts {
 
   static function create(Array $post): bool 
   {
-    extract($post);
     $db = DB::init();
-    $posts = nl2br('olá mundo');
+    extract($post);
+    $title = nl2br($title);
+    $title = filter_var($title, FILTER_SANITIZE_STRING);
 
+    $post_term = Text::create_term($title);
 
     
-
+  
     return false;
   }
 
