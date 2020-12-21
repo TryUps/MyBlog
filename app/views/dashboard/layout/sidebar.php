@@ -9,8 +9,9 @@
         <ul>
           <li><a href="./" class="active"><i class="fas fa-home"></i></a></li>
           <li><a href="./articles"><i class="far fa-newspaper"></i></a></li>
-          <li><a href=""><i class="fas fa-file-alt"></i></a></li>
-          <li><a href=""><i class="fas fa-users"></i></a></li>
+          <li><a href="/media"><i class="fas fa-photo-video"></i></a></li>
+          <li><a href="/comments"><i class="fas fa-comments"></i></a></li>
+          <li><a href="/users"><i class="fas fa-users"></i></a></li>
           <li><a href="./preferences"><i class="fas fa-cog"></i></a></li>
         </ul>
         <ul>

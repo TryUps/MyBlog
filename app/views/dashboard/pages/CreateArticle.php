@@ -1,21 +1,21 @@
 <form class="create-post" action="./articles/create" method="POST" enctype="multipart/form-data">
   <div class="content">
-    <input type="text" name="post_title" id="" placeholder="Seu titulo...">
-    <div class="article-url">
+    <input type="text" name="post_title" id="post_title" placeholder="Seu titulo...">
+    <div class="article_url">
       <i class="fas fa-external-link-alt"></i>
-      <div class="url-link">https://my.blog/2020/11/hello-world-welcome-to-myblog.html</div>
+      <a class="url_link" id="url">https://my.blog/2020/11/<span class="permalink">unknow-post</span>.html</a>
     </div>
     <div class="article-tags" contenteditable="true">
       <div class="tag">Tag 1</div>
       <div class="tag tag-plus" contenteditable="false">+</div>
-      <input type="hidden" name="post_tags">
+      <input type="hidden" name="post_tags" value="minha tag, Tagzona">
     </div>
     <myb-editor>
       <div class="myb-texteditor">
         <iframe class="editor-text" src="about:blank"></iframe>
       </div>
       <div class="myb-htmleditor">
-        <textarea name="article_content" id="" cols="30" rows="10" class="editor-code"></textarea>
+        <textarea name="post_content" id="" cols="30" rows="10" class="editor-code"></textarea>
       </div>
       <editor-tab>
         <button data-action="undo" class="item"><i class="fas fa-undo"></i></button>
@@ -50,6 +50,20 @@
     </myb-editor>
   </div>
   <div class="sidebar">
+    <div class="side-box publish" id="publish">
+      <h1 class="box-title">Publicar</h1>
+      <div class="box-content">
+        <div class="pub-option">
+          <label>Visibilidade:</label>
+        </div>
+        <div class="pub-option">
+          <label>Visibilidade:</label>
+        </div>
+        <div class="pub-option">
+          <label>Visibilidade:</label>
+        </div>
+      </div>
+    </div>
     <button class="side-button" type="submit">
       <i class="fas fa-cog"></i>
       <span>Publicar</span>

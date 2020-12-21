@@ -77,4 +77,12 @@
       }
     }
   }
+
+  var permalink = document.querySelector('.article_url > #url');
+  var the_title = document.querySelector('#post_title');
+  the_title.addEventListener('keyup', function (e) {
+    var title = e.target.value;
+    var the_perma = permalink.querySelector('span');
+    the_perma.innerText = title;
+  });
 })();

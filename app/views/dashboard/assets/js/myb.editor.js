@@ -59,4 +59,13 @@
     }
   }
 
+  const permalink = document.querySelector('.article_url > #url');
+  const the_title = document.querySelector('#post_title');
+
+  the_title.addEventListener('keyup', (e) => {
+    let title = e.target.value;
+    let the_perma = permalink.querySelector('span')
+    the_perma.innerText = title
+  })
+
 })();

@@ -43,6 +43,10 @@ class Query {
       }
     }
 
+    if(isset($is_page) && $is_page){
+      $SQL .= "WHERE post.type = '1'";
+    }
+
     if(isset($tag) && is_array($tag)){
       $sql .= "";
     }
@@ -88,7 +92,7 @@ class Query {
     }
 
     if(isset($limit)){
-      $sql .= " LIMIT $limit";
+      $sql .= " ORDER BY DATE(date) DESC LIMIT 10";
     }
 
     

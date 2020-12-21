@@ -9,6 +9,9 @@
           <input type="text" placeholder="Pesquisar postagens">
           <button><i class="fas fa-search"></i></button>
         </form>
+        <custom-selector class="article-by">
+          <item default disabled>Por Categoria</item>
+        </custom-selector>
       </div>
       <div class="article-sort" style="display: none;">
         <div>Showing 100 posts</div>

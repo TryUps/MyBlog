@@ -116,9 +116,28 @@ class DB extends DBConfig {
     }
   }
 
-  public function insert($table, $values){
+  public function insert($table, $values)
+  {
     try {
-      return false;
+      $vals = array();
+      $into = array();
+      foreach($values as $key => $val){
+        array_push($vals, ":$key");
+        array_push($into, "$key");
+      }
+      $vals = implode(", ", $vals);
+      $into = implode(", ", $into);
+      $sql = "INSERT INTO `$table` ($into) VALUES ($vals)";
+      $sth = $this->db->prepare($sql);
+      foreach($values as $key => $val){
+        $sth->bindValue(":" . $key, $val, $this->getType($val));
+      }
+
+      if($sth->execute()){
+        return $this->db->lastInsertId();
+      }else{
+        return false;
+      }
     }catch(PDOException $e){
       return Error::DB($e);
     }
@@ -134,6 +153,18 @@ class DB extends DBConfig {
     }catch(PDOException $e){
       return Error::DB($e);
     }
+  }
+
+  public function begin(){
+    return $this->db->beginTransaction();
+  }
+
+  public function rollback(){
+    return $this->db->rollback();
+  }
+
+  public function end(){
+    return $this->db->commit();
   }
 
   public function count($table){

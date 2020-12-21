@@ -57,7 +57,7 @@ class Selector extends HTMLElement {
         min-height: 30px;
         max-height: 160px;
         border-radius: 6px;
-        z-index: 10;
+        z-index: 999999;
         border-top: 1px solid rgba(255,255,255, 0.2);
         border-left: 1px solid rgba(255,255,255, 0.2);
         backdrop-filter: blur(15px);
@@ -96,9 +96,9 @@ class Selector extends HTMLElement {
 
     const optionlist = shadow.querySelector('.option-list')
     if(this.getAttribute('mode') === 'top'){
-      optionlist.style.bottom = '43px';
+      optionlist.style.bottom = 'calc(100% + 6px)';
     }else{
-      optionlist.style.top = '33px';
+      optionlist.style.top = '102%';
     }
     this.addEventListener('click', function(e){
       optionlist.classList.toggle('show');

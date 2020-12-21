@@ -256,7 +256,7 @@ class Template extends templateSettings {
 	private function catch($file = null){
 		$db = DB::init();
 		$file = $file ? $file : $this->getVar('*');
-		$pattern2 = "#<%catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+(?<attributes>.*?)%>([\w\W]*?)<%catch%>#";
+		//$pattern2 = "#<%catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+(?<attributes>.*?)%>([\w\W]*?)<%catch%>#";
 		$pattern = "#<Catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+(?<attributes>.*?)>([\w\W]*?)</Catch>#";
 		preg_match_all($pattern, $file, $catches, PREG_SET_ORDER);
 		if(!$catches)return false;
@@ -264,7 +264,7 @@ class Template extends templateSettings {
 			switch($catch['content']){
 				case 'posts':
 					$query = Query::posts([
-						"limit" => 10 
+						"limit" => 10
 					]);
 					break;
 				case 'single-post':
