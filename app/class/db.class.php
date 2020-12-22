@@ -155,6 +155,10 @@ class DB extends DBConfig {
     }
   }
 
+  public function join($table, $cond, $type = 'INNER'){
+
+  }
+
   public function begin(){
     return $this->db->beginTransaction();
   }
@@ -164,7 +168,12 @@ class DB extends DBConfig {
   }
 
   public function end(){
-    return $this->db->commit();
+    try {
+      $this->db->commit();
+    } catch(PDOException $e) {
+      $this->db->rollback();
+      echo $e->getMessage();
+    }
   }
 
   public function count($table){

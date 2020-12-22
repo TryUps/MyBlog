@@ -51,28 +51,32 @@
   </div>
   <div class="sidebar">
     <div class="side-box publish" id="publish">
-      <h1 class="box-title">Publicar</h1>
+      <figure class="thumbnail">
+        <picture class="thumbnail">
+          <img src="https://image.tmdb.org/t/p/w342/dRV58n6krTWxVVLrEX8FDGYTPU5.jpg" alt="" class="cover" />
+          <button class="cover-btn" type="button">Alterar capa</button>
+        </picture>
+        <h1 class="pic-title">Publish</h1>
+      </figure>
       <div class="box-content">
         <div class="pub-option">
-          <label>Visibilidade:</label>
+          <label><i class="fas fa-eye-slash"></i>Visibilidade</label>
+          <span>Publico</span>
         </div>
         <div class="pub-option">
-          <label>Visibilidade:</label>
+          <label><i class="fas fa-unlock-alt"></i>Protected</label>
+          <span>Password</span>
         </div>
         <div class="pub-option">
-          <label>Visibilidade:</label>
+          <label><i class="far fa-calendar"></i>Publicar em</label>
+          <span>22 de dezembro de 2020 ás 00:15</span>
         </div>
       </div>
     </div>
-    <button class="side-button" type="submit">
+    <button class="side-button ico-btn" type="submit">
       <i class="fas fa-cog"></i>
       <span>Publicar</span>
     </button>
-    <picture class="side-box cover">
-      <img src="https://image.tmdb.org/t/p/w342/dRV58n6krTWxVVLrEX8FDGYTPU5.jpg" alt="" class="cover">
-      <input type="file" name="thumbnail" id="fileToUpload" style="visibility: hidden">
-      <button class="cover-btn" type="button"><label for="fileToUpload">Alterar capa</label></button>
-    </picture>
     <a class="side-button pub-btn" href="#">
       <i class="fas fa-cog"></i>
       <span>Avançado</span>

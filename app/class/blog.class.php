@@ -26,7 +26,8 @@ class Blog {
 		$this->template->var("link:actual", Link::Actual());
 		$this->template->var("feed", Link::Home() . "rss.xml");
 		$this->template->var("static", Link::Home() . "static");
-		$this->template->var("styles", Link::Home() . "static/css/");
+		$this->template->var("static:styles", Link::Home() . "static/css");
+		$this->template->var("styles", Link::Home() . "static/css");
 		$this->template->var("styles:default", Link::Home() . "static/css/style.css");
 		$this->template->var("scripts", Link::Home() . "static/js/");
 		return false;

@@ -735,9 +735,10 @@ button.ico-btn span, a.ico-btn span {
 .create-post .sidebar a.side-button, .create-post .sidebar button.side-button {
   display: flex;
   flex-direction: row;
-  padding: 6px;
+  padding: 8px;
+  margin-bottom: 10px;
   align-items: center;
-  background: #F6F6F8;
+  background-size: 280px;
   color: #000;
   text-decoration: none;
   border-radius: 10px;
@@ -746,8 +747,8 @@ button.ico-btn span, a.ico-btn span {
   color: #ccc;
 }
 .create-post .sidebar a.side-button i, .create-post .sidebar button.side-button i {
-  background: #fff;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 8px;
   border-radius: 20px;
   font-size: 0.9rem;
   margin-left: 5px;
@@ -762,20 +763,31 @@ button.ico-btn span, a.ico-btn span {
   border-radius: 20px;
   border: 1px solid #eee;
   background-color: #fff;
-  min-height: 200px;
+  height: auto;
   width: 100%;
   margin: 10px 0;
-  padding: 15px;
   box-shadow: 0px 5px 13px 0px rgba(74, 99, 231, 0.1);
 }
-.create-post .sidebar .side-box.cover {
+.create-post .sidebar .side-box figure.thumbnail {
   position: relative;
-  box-shadow: none;
-  padding: 0;
-  max-width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+  height: 160px;
+  border-radius: 20px;
 }
-.create-post .sidebar .side-box.cover button.cover-btn {
+.create-post .sidebar .side-box figure.thumbnail picture.thumbnail {
+  position: relative;
+  max-width: 100%;
+  max-height: 160px;
+}
+.create-post .sidebar .side-box figure.thumbnail picture.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+.create-post .sidebar .side-box figure.thumbnail picture.thumbnail button.cover-btn {
   display: flex;
   left: 50%;
   transform: translateX(-50%);
@@ -790,11 +802,16 @@ button.ico-btn span, a.ico-btn span {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
-.create-post .sidebar .side-box.cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+.create-post .sidebar .side-box figure.thumbnail h1.pic-title {
+  position: absolute;
+  top: 18px;
+  left: 0px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 5px 15px 5px 15px;
+  border-radius: 0 20px 20px 0;
 }
 .create-post .sidebar .side-box .box-title {
   font-weight: bold;
@@ -805,11 +822,29 @@ button.ico-btn span, a.ico-btn span {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 10px;
+  word-wrap: break-word;
+  margin: 8px 10px;
 }
 .create-post .sidebar .side-box .box-content .pub-option {
-  padding: 10px 5px;
-  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 5px;
+}
+.create-post .sidebar .side-box .box-content .pub-option label {
+  display: flex;
+  align-items: center;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #999;
+  font-size: 0.78rem;
+  margin-bottom: 8px;
+}
+.create-post .sidebar .side-box .box-content .pub-option label i {
+  margin-right: 5px;
+  color: #777;
+}
+.create-post .sidebar .side-box .box-content .pub-option span {
+  font-size: 0.9rem;
 }
 .create-post .sidebar .side-box input.box-title {
   font-weight: bold;

@@ -42,9 +42,11 @@ class Query {
         $sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat') LEFT JOIN `category` AS child ON (child.group = cat.id) WHERE child.name = '$child'";
       }
     }
+    
+    
 
     if(isset($is_page) && $is_page){
-      $SQL .= "WHERE post.type = '1'";
+      $SQL .= " WHERE post.type = '1'";
     }
 
     if(isset($tag) && is_array($tag)){
@@ -71,7 +73,7 @@ class Query {
       )
     */
 
-    if(isset($order) && is_array($order)){
+    /*if(isset($order) && is_array($order)){
       $column = $order['column'];
       if(is_array($column)){
         $column = implode(",", $column);
@@ -89,11 +91,12 @@ class Query {
 
     if(isset($advancedOrder)){
       $sql .= " ORDER BY $advancedOrder";
-    }
+    }*/
 
     if(isset($limit)){
-      $sql .= " ORDER BY DATE(date) DESC LIMIT 10";
+      $sql .= " ORDER BY DATE(post.date) ASC LIMIT 999";
     }
+
 
     
     if($sql && $query = $db->query($sql)){

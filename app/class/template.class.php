@@ -274,7 +274,11 @@ class Template extends templateSettings {
 						$query = Query::posts([
 							"date" => $postDate,
 							"term" => $postName,
-							"limit" => 1
+							"limit" => 1,
+							"order" => [
+								"column" => "id",
+								"sort" => "DESC"
+							]
 						]);
 					}
 					break;
