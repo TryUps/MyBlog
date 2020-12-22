@@ -71,12 +71,12 @@
           <label><i class="far fa-calendar"></i>Publicar em</label>
           <span>22 de dezembro de 2020 ás 00:15</span>
         </div>
+        <button class="btn gradient-btn">
+          <i class="fas fa-cog"></i>
+          <span>Publish</span>
+        </button>
       </div>
     </div>
-    <button class="side-button ico-btn" type="submit">
-      <i class="fas fa-cog"></i>
-      <span>Publicar</span>
-    </button>
     <a class="side-button pub-btn" href="#">
       <i class="fas fa-cog"></i>
       <span>Avançado</span>

@@ -8,6 +8,7 @@ html, body {
   min-height: 100vh;
   max-width: 100vw;
   max-height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
@@ -738,7 +739,9 @@ button.ico-btn span, a.ico-btn span {
   padding: 8px;
   margin-bottom: 10px;
   align-items: center;
-  background-size: 280px;
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  font-weight: bold;
+  background-size: 300px 300px;
   color: #000;
   text-decoration: none;
   border-radius: 10px;
@@ -1077,4 +1080,92 @@ table.category-list tr:hover {
   border-radius: inherit;
   /* !importanté */
   background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+}
+
+button.btn,
+a.btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+button.btn.gradient-btn,
+a.btn.gradient-btn {
+  padding: 8px;
+  align-items: center;
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  font-weight: bold;
+  background-size: 300px 300px;
+  margin: 0 5px;
+  color: #000;
+  text-decoration: none;
+  border-radius: 20px;
+  margin-top: 5px;
+  transition: all 0.5s;
+}
+button.btn.gradient-btn:active,
+a.btn.gradient-btn:active {
+  color: #ccc;
+}
+button.btn.gradient-btn:hover,
+a.btn.gradient-btn:hover {
+  background-position: right bottom;
+}
+button.btn.gradient-btn i,
+a.btn.gradient-btn i {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 8px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+button.btn.gradient-btn i + span,
+a.btn.gradient-btn i + span {
+  margin-left: 15px;
+  font-weight: bold;
+}
+button.btn.blur-btn,
+a.btn.blur-btn {
+  display: flex;
+  background: rgba(0, 0, 0, 0.6);
+  color: #ccc;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.modal-outer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 999999;
+}
+
+.modal {
+  position: absolute;
+  display: flex;
+  visibility: hidden;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 20px;
+  min-width: 700px;
+  height: 450px;
+  border: 1px solid #ccc;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal header {
+  display: flex;
+  padding: 20px;
+  background: #eee;
+}
+.modal main {
+  padding: 20px;
 }
