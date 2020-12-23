@@ -10,8 +10,17 @@ class User {
 
     function __construct(){
     }
+    #@Array $credentials = []
 
-    static function login(Array $login = []): bool 
+    /* 
+      $credentials = [
+        "user" => string, // or "email"
+        "pass" => string,
+        "remember" => bool;
+        "secure" => bool; // prefer true
+      ]
+    */
+    static function login(Array $login = [], $credentials = []): bool 
     {
       self::$db = DB::init();
 
