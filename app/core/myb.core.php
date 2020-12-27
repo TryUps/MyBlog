@@ -2,8 +2,12 @@
   use MyB\DB as DB;
   use MyB\Lang as Lang;
   use MyB\JWT_GEN as JWT;
+  use MyB\DB\QueryBuilder;
 
   $db = new DB();
+
+  $query = new QueryBuilder();
+
 
   $timezone = $db->select("preferences", ["name" => "timezone"]);
   if($timezone){

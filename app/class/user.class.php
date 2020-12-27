@@ -20,11 +20,41 @@ class User {
         "secure" => bool; // prefer true
       ]
     */
-    static function login(Array $login = [], $credentials = []): bool 
+    static function login(Array $credentials = []): bool 
     {
       self::$db = DB::init();
+      $login = $credentials;
+      if(array_key_exists("user", $credentials) || array_key_exists("email", $credentials) && array_key_exists("pass", $credentials)){
+        $user = isset($credentials['user']) ? $credentials['user'] : null;
+        $email = isset($credentials['email']) ? $credentials['email'] : null;
+        $pass = isset($credentials['pass']) ? $credentials['pass'] : null;
+        $expires = isset($credentials['expires']) ? $credentials['expires'] : (60 * 60);
+        $remember = isset($credentials['remember']) ? $credentials['remember'] : false;
+        $secure = isset($credentials['secure']) ? $credentials['secure'] : true;
+        
+        $user = self::sanitize($user);
+        $pass = self::sanitizePass($pass);
+        if($email){
+          $email = self::validateMail($email);
+        }
 
-      $user = self::sanitize($login['user']);
+        
+        if($exists = ($user) ? self::user_exists($user) : self::user_exists($email)){
+          if($passKey = self::$db->select("preferences", ["name" => "MYB_SECRET_KEY"])){
+            $passKey = $passKey->value;
+            $pass .= $passKey;
+            if(password_verify($pass, $exists['pass'])){
+              return self::generate_session($exists);
+            }
+          }else{
+            return false;
+          }
+        }else{
+          return false;
+        }
+      }
+
+      /*$user = self::sanitize($login['user']);
       $pass = self::sanitizePass($login['pass']);
       if(self::validateMail($user)){
         $user = self::validateMail($user);
@@ -95,7 +125,7 @@ class User {
           "msg" => "User not found.",
           "status" => 404
         ]);
-      }
+      }*/
 
 
       return false;
@@ -103,16 +133,70 @@ class User {
 
     static function user_exists($user){
       if(!empty($user)){
-        $check = self::$db->query("SELECT id, user, email, pass, fullname, birthdate, status, rank FROM `users` WHERE (user = '$user' or email = '$user') LIMIT 0,1");
+        $check = self::$db->query("SELECT id, user, email, pass, fullname, birthdate, status, rank FROM `users` WHERE (user = '$user' or email = '$user') LIMIT 1");
         $checkNum = $check->rowCount();
         if($checkNum > 0 && $checkNum < 2){
-          return $check->fetch(\PDO::FETCH_ASSOC);
+          $check = $check->fetch(\PDO::FETCH_ASSOC);
+          return $check;
         }else{
           return false;
         }
       }else{
         return false;
       }
+    }
+
+    static function generate_session(Array $user, Array $options = []){
+      function getUsrIp(){
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+          $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+          $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        }
+        $client  = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote  = $_SERVER['REMOTE_ADDR'];
+
+        if(filter_var($client, FILTER_VALIDATE_IP)){
+            $ip = $client;
+        }
+        elseif(filter_var($forward, FILTER_VALIDATE_IP)){
+            $ip = $forward;
+        }else{
+            $ip = $remote;
+        }
+        return $ip;
+      }
+
+      $issued_at = time();          // 60 * 60 – 60 minutes / One Hour
+      $expiration_time = $issued_at + (240 * 60);
+      $issuer = $_SERVER['SERVER_NAME'];
+      $token = [
+        "iat" => $issued_at,
+        "exp" => $expiration_time,
+        "iss" => $issuer,
+        'nbf'  => $issued_at - 1,
+        "data" => [
+          "id" => $user['id'],
+          "user" => $user['user'],
+          "email" => $user['email'],
+          "fullname" => htmlspecialchars($user['fullname']),
+          "birthdate" => $user['birthdate'],
+          "status" => $user['status'],
+          "rank" => $user['rank'],
+          "ip" => getUsrIp()
+        ]
+      ];
+      if($jwt = JWT::token($token)){
+        if($jwtDecoded = self::checkLogin($jwt)){
+          setcookie("token", $jwt, $issued_at, '/',$issuer, false, false);
+          setcookie("myb__user_id", $jwtDecoded->data->id, $issued_at, '/', $issuer, false, false);
+          return true; 
+        }
+        return false;
+      }else{
+        return false;
+      }
+      return false;
     }
 
     static function register(Array $userData): bool
@@ -222,8 +306,8 @@ class User {
     }
 
     static function session(){
-      if(isset($_COOKIE['jwt'])){
-        $jwt = $_COOKIE['jwt'];
+      if(isset($_COOKIE['token'])){
+        $jwt = $_COOKIE['token'];
         if($user = self::checkLogin($jwt)){
           $user = $user->data;
           return $user;
@@ -249,6 +333,7 @@ class User {
       $string = filter_var($string, FILTER_SANITIZE_STRING);
       $string = stripcslashes($string);
       $string = strip_tags($string);
+      $string = preg_replace("/[^a-zA-Z0-9-]/", "-", strtr(utf8_decode(trim($string)), utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"),"aaaaeeiooouuncAAAAEEIOOOUUNC-"));
       $string = htmlentities($string, ENT_QUOTES, 'UTF-8');
 
       return $string;
@@ -260,15 +345,15 @@ class User {
       return $pass;
     }
 
-    private static function validateMail(String $email): string
+    private static function validateMail(String $email)
     {
       $email = htmlspecialchars(strip_tags($email));
-      $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-      if(checkdnsrr(array_pop(explode("@", $email)),"MX")){
-        return $email;
-      }else{
-        return (bool)false;
+      if($email = filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if(checkdnsrr(array_pop(explode("@", $email)),"MX")){
+          return $email;
+        }
       }
+      return (bool)false;
     }
 
     private function validateUser(){

@@ -3,6 +3,7 @@
   use MyB\View as View;
   use MyB\Blog as Blog;
 
+
   $template =$_REQUEST['template'];
   $action = $_REQUEST['action'];
   $params = $req['params'];

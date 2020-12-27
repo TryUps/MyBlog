@@ -58,7 +58,7 @@ class Template extends templateSettings {
 	private function replaceVars() {
 		$file = $this->getVar("*");
 		foreach ($this->values as $var => $value) {
-			$file = @str_replace($var, $value, $file);
+			$file = str_replace($var, $value, $file);
 		}
 		$this->setVar("*", $file);
 	}
