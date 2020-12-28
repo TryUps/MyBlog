@@ -63,8 +63,13 @@
     {
 
     }
-    public function __destruct()
+
+    function fields(...$fields)
     {
-      $this->db = null;
+      return "FIELD(".implode(",", $fields).")";
+    }
+
+    function date($date, $format){
+      return "DATE_FORMAT($date, '$format')";
     }
   }

@@ -3,23 +3,26 @@ import 'layout/header';
   <section class="row">
     <h2>Recentes</h2>
     <div class="articles row">
-      <%catch 'post' from 'posts' by='latest' limit='0,10'%>
+      <List 'article' from 'articles'>
         <article class="card col-sm-6 mx-2" style="width: 20rem; padding: 0;">
-          <img src="https://w.wallhaven.cc/full/ox/wallhaven-oxkjgm.jpg" class="card-img-top" alt="%post:title%">
+          <img src="%article:thumb%" class="card-img-top" alt="%article:title%">
           <div class="card-body">
-            <h5 class="card-title">%post:title%</h5>
+            <h5 class="card-title">%article:title%</h5>
             <h6 class="card-subtitle mb-2 text-muted">Filme, Comédia</h6>
             <p class="card-text">text::limit('%post:summary%', 150)</p>
           </div>
           <div class="card-footer">
-            <a href="%post:url%" class="btn btn-primary">Read more...</a>
+            <a href="%article:url%" class="btn btn-primary">Read more...</a>
           </div>
         </article>
-        <%not catch%>
+        <Blank>
           <p>Filme não encontrado.</p>
-        <%not catch%>
-      <%catch%>
+        </Blank>
+      </List>
     </div>
+    <Page>
+
+    </Page>
   </section>
   <section class="row">
     aaa

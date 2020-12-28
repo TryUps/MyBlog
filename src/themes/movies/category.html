@@ -4,7 +4,7 @@ import 'layout/header';
     <h2>%category%</h2>
   </section>
   <section class="articles row">
-    <%catch 'post' from 'posts-by-cat' %>
+    <Catch 'post' from 'posts-by-cat' >
       <article class="card col-sm-6 mx-2" style="width: 20rem; padding: 0;">
         <img src="https://w.wallhaven.cc/full/ox/wallhaven-oxkjgm.jpg" class="card-img-top" alt="%post:title%">
         <div class="card-body">
@@ -19,7 +19,7 @@ import 'layout/header';
       <%not catch%>
         <p>Filme não encontrado.</p>
       <%not catch%>
-    <%catch%>
+    </Catch>
   </section>
 </main>
 import 'layout/footer';

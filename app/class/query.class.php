@@ -29,45 +29,105 @@ class Query {
   static function posts(array $options = []): array
   {
     global $qb;
-    exit($qb);
+    //TODO: Add query Builder;
     extract($options);
     $sql = "SELECT post.* FROM `posts` as post";
 
-    $query = $qb->select("post", "p")->from('posts');
+    $query = $qb->select("p.*")->from('posts', "p");
+    
+    $type = 0;
+    if(isset($type)){
+      switch($type){
+        case 'private':
+          $type = 0;
+          break;
+        case 'page':
+          $type = 1;
+          break;
+        case 'published':
+          $type = 2;
+          break;
+        case 'scheduled':
+          $type = 3;
+        case 'draft':
+          $type = 4;
+          break;
+        case 'image':
+          $type = 5;
+          break;
+        case 'video':
+          $type = 6;
+          break;
+        case 'document':
+          $type = 7;
+          break;
+        case 'note':
+          $type = 8;
+          break;
+        case 'auto-draft':
+          $type = 9;
+        default:
+          $type = 2; //? HIDDEN POST
+      }
+    }
+
+    $query = $query->where("type", $type);
 
     if(isset($cat) && $cat = (array)$cat){
       if(count($cat) <= 1){
         $cat = $cat[0];
-        $query = $query->join("post_cats as pcat","p.id = pcat.id")->join("category as cat", "pcat.id = cat.id")->where('cat.name', $cat)->whereOr('cat.term', $cat)->whereOr('cat.id', $cat);
+        $query = $query->join("post_cats AS pcat","p.id = pcat.post_id")->join("category AS cat", "pcat.cat_id = cat.id")->where('cat.term', $cat);
         //$sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat')";
       }else{
         $child = $cat['child'];
         $cat = $cat[0];
-        $query = $query->join("post_cats as pcat","p.id = pcat.id")->join("category as cat", "pcat.id = cat.id")->join("category as child","child.group = cat.id")->where('cat.name', $cat)->whereOr('cat.term', $cat)->whereOr('cat.id', $cat)->whereAnd('child.name', $child);
+        $query = $query->join("post_cats as pcat","p.id = pcat.post_id")->join("category as cat", "pcat.cat_id = cat.id")->join("category as child","child.group = cat.id", "left")->where('cat.term', $cat)->whereAnd('child.term', $child);
+    
         //$sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat') LEFT JOIN `category` AS child ON (child.group = cat.id) WHERE child.name = '$child'";
       }
-
-    }
-
-
-    
-    
-
-    /*if(isset($is_page) && $is_page){
-      $SQL .= " WHERE post.type = '1'";
-    }
-
-    if(isset($tag) && is_array($tag)){
-      $sql .= "";
     }
 
     if(isset($date)){
-      $sql .= " WHERE DATE_FORMAT( `date`, '%Y-%m' ) = '$date'";
+      if(is_array($date)){
+        $date = implode('-', array_values($date));
+      }
+      //$date = new \ArrayObject( $dates );
+      //$date = $date->getIterator();
+      $date = strtotime($date) ? $date : str_replace('/','-', $date);
+      $obj_date = \DateTime::createFromFormat('m-Y', $date);
+      $obj_date = $obj_date->getTimestamp();
+      
+      $query->whereLike($qb->date('date', '%d-%m-%Y %H:%i:%s'), '%'.$date.'%');
     }
 
-    if(isset($term)){
-      $sql .= " and `term` = '$term'";
+    if(isset($term) && !empty($term)){
+      $query = $query->whereAnd('term', $term);
     }
+
+    // test
+    
+    if(isset($tags) && is_array($tags)){
+      $queryTag = $query->join("post_tags as tag", "p.id = tag.post_id", 'left');
+      foreach($tags as $tag){
+        $query->where('tag.term', '%'.$tag.'%',"like")->whereOr('tag.name', '%'.$tag.'%', 'like');
+      }
+      $query->group(['p.id']);
+      $query = $queryTag;
+    }
+
+    if(isset($search)){
+      $query =
+      $query->join("post_tags as tag","p.id = tag.post_id",'left')
+      ->join('post_cats as cats','p.id = cats.post_id', 'left')
+      ->join('category as cat', 'cats.cat_id = cat.id', 'left')
+      ->where('p.title', '%'.$search.'%','like')
+      ->whereOr('tag.name', '%'.$search.'%','like')
+      ->whereOr('cat.name', '%'.$search.'%','like')
+      ->group(['p.id']);
+    }
+
+
+    /*
 
     if(isset($search)){
       $sql .= " LEFT JOIN `post_tags` AS tag ON (post.id = tag.post_id) LEFT JOIN `post_cats` AS cats ON (post.id = cats.post_id) LEFT JOIN `category` AS cat ON (cats.cat_id = cat.id) WHERE post.title LIKE '%$search%' OR tag.name LIKE '%$search%' OR cat.name LIKE '%$search%' GROUP BY post.id";
@@ -102,17 +162,22 @@ class Query {
       $sql .= " ORDER BY $advancedOrder";
     }*/
 
-    /*if(isset($limit)){
-      $sql .= " ORDER BY DATE(post.date) ASC LIMIT 999";
+    if(isset($offset)){
+      $query = $query->offset($offset);
+    }
+  
+    if(isset($limit)){
+      $query = $query->limit($limit);
     }
 
+    $query->order([
+      $qb->fields('p.pinned',1,0) => '',
+      'p.date' => 'desc'
+    ]);
 
-    
-    if($sql && $query = $db->query($sql)){
-      return($query->fetchAll(\PDO::FETCH_ASSOC));
-    }*/
-    exit($query);
-    $query->execute()->fetchAll('assoc');
+    if($query = $query->execute()){
+      return $query->fetchAll('assoc');
+    }
 
     return [];
   }

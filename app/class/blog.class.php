@@ -42,14 +42,17 @@ class Blog {
 	}
 
 	public function generate_template_functions() {
+		// TODO: GENERATE TEMPLATE FUNCTIONS WITH PLUGIN OR TEMPLATE(FUNCTION.PHP) FILE.
 		return false;
 	}
 
 	private function renderHome() {
+		// TODO: DETECT OR SELECT HOMEPAGE
 		return $this->template->render('index.html');
 	}
 
 	private function renderPost() {
+		// TODO: CREATE FUNCTION TO LIST ARTICLE HERE
 		$postYear = $this->params['year'];
 		$postMonth = $this->params['month'];
 		$postName = $this->params['postname'];
@@ -57,13 +60,14 @@ class Blog {
 		if(isset($postDate, $postName) && !empty($postDate) || !empty($postName)){
 			$_REQUEST['postDate'] = $postDate;
 			$_REQUEST['postName'] = $postName;
-			return $this->template->render('post.html');
+			return $this->template->render('article.html');
 		}else{
 			return Error::get(404);
 		}
 	}
 
 	private function renderPage() {
+		// TODO: CREATE FUNCTION TO LIST PAGE HERE
 		$page = $this->params['page'];
 		if(isset($this->params['page']) && !empty($this->params['page'])){
 			echo 'aaa';
@@ -73,9 +77,11 @@ class Blog {
 	}
 
 	private function renderCat(){
+		// TODO: CREATE FUNCTION TO LIST CATEGORY HERE
 		if(isset($this->params['cat']) && !empty($this->params['cat'])){
 			$cat = explode('/', $this->params['cat']);
 			$_REQUEST['cat'] = $cat;
+			$this->template->var('category', $cat[0]);
 			return $this->template->render('category.html');
 		}else{
 			$_REQUEST['cat'] = "myb__listing_categories:true";
@@ -84,6 +90,7 @@ class Blog {
 	}
 
 	private function renderTag(){
+		// TODO: CREATE FUNCTION TO LIST TAGS HERE
 		if(isset($this->params['tag']) && !empty($this->params['tag'])){
 			$tag = $this->params['tag'];
 			$_REQUEST['tag'] = $tag;

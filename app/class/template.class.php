@@ -253,68 +253,66 @@ class Template extends templateSettings {
 		}
 	}
 
-	private function catch($file = null){
+	private function list($file = null){
 		$db = DB::init();
 		$file = $file ? $file : $this->getVar('*');
 		//$pattern2 = "#<%catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+(?<attributes>.*?)%>([\w\W]*?)<%catch%>#";
-		$pattern = "#<Catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+(?<attributes>.*?)>([\w\W]*?)</Catch>#";
+		$pattern = "/<List ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"](?<attributes>.*)>(?<body>[\w\W]*?)<\/List>/";
 		preg_match_all($pattern, $file, $catches, PREG_SET_ORDER);
 		if(!$catches)return false;
 		foreach($catches as $catch){
 			switch($catch['content']){
-				case 'posts':
-					$query = Query::posts([
-						"limit" => 10
-					]);
+				case 'articles':
+					$query = [
+						"limit" => 10,
+					];
 					break;
-				case 'single-post':
+				case 'single-article':
 					if(isset($_REQUEST['postDate']) && isset($_REQUEST['postName'])){
 						$postDate = date("Y-m", strtotime($_REQUEST['postDate']));
 						$postName = $_REQUEST['postName'];
-						$query = Query::posts([
+						$query = [
 							"date" => $postDate,
 							"term" => $postName,
-							"limit" => 1,
-							"order" => [
-								"column" => "id",
-								"sort" => "DESC"
-							]
-						]);
+							"limit" => 1
+						];
 					}
 					break;
-				case 'posts-by-cat':
+				case 'articles-by-cat':
 					$cat = $_REQUEST['cat'];
 
 					if(sizeof($cat) > 1){
-						$query = Query::posts([
+						$query = [
 							"cat" => [
 								$cat[0],
 								"child" => $cat[1]
 							],
 							"limit" => 10
-						]);
+						];
 					}else{
-						$query = Query::posts([
+						$query = [
 							"cat" => $cat[0],
 							"limit" => 10
-						]);
+						];
 					}
 					break;
 				case 'category':
 					$query = Query::category();
 					break;
-				case 'posts-by-tag':
+				case 'articles-by-tag':
 					$tag = $_REQUEST['tag'];
-					$sql = "SELECT * FROM `posts` as post INNER JOIN `post_tags` as tag on post.id = tag.post_id and tag.name = '$tag'";
+					$query = [
+						"tags" => [$tag]
+					];
 					break;
 				case 'tags':
 					$query = Query::tags();
 					break;
 				case 'search-posts':
 					$searchTerm = $_GET['q'];
-					$query = Query::posts([
+					$query = [
 						"search" => $searchTerm
-					]);
+					];
 					$countResults = sizeof($query);
 					$this->__set('search:term', $searchTerm);
 					$this->__set('search:results', $countResults);
@@ -323,32 +321,40 @@ class Template extends templateSettings {
 					$not_match_method = "This method not found, please check MyBlog Documentation";
 			}
 
-			/*
+
+			
 			$catchMode = $this->catchMode($catch['attributes']);
 
-			if(array_key_exists('mode', $catchMode)){
+			/*if(array_key_exists('mode', $catchMode)){
 				switch($catchMode['mode']){
 					case 'latest':
 						$sql .= " ORDER BY date DESC";
 						break; 
 				}
 				$sql .= "";
-			}
+			}*/
 
 			if(array_key_exists('limit', $catchMode)){
 				$limit = $catchMode['limit'];
-				$sql .= " LIMIT $limit";
+				$query['limit'] = $limit;
+			}
+
+			if(array_key_exists('offset', $catchMode)){
+				$offset = $catchMode['category'];
+				$query['offset'] = $limit;
 			}
 
 			if(array_key_exists('category', $catchMode)){
-				$cat = $catchMode['category'];
-				#null
+				$category = $catchMode['category'];
+				$query['cat'] = $category;
 			}
 
 			if(array_key_exists('tag', $catchMode)){
 				$tag = $catchMode['category'];
 				#null
-			}*/
+			}
+
+			$query = Query::posts($query);
 
 			$rep = [];
 			if(!isset($query))return;
@@ -373,26 +379,26 @@ class Template extends templateSettings {
 					}
 
 					return $return;
-				}, $catch[4]);
+				}, $catch['body']);
 			}
 
 			if(!empty($rep)){
-				krsort($rep);
-				$rep = preg_replace("#<%not catch%>(.*?)<%not catch%>#s",null, $rep);
-				$res = str_replace($catch[4], implode(null, $rep), $file);
+
+				$rep = preg_replace("#<Blank>(.*?)</Blank>#s",null, $rep);
+				$res = str_replace($catch['body'], implode(null, $rep), $file);
 				$file = $res;
 			}else{
-				if(preg_match("#<%not catch%>(?<msg>(.*?))<%not catch%>#s", $catch[4], $rep)){
-					$file = str_replace($catch[4], $rep["msg"], $file);
+				if(preg_match("#<Blank>(?<msg>(.*?))</Blank>#s", $catch[4], $rep)){
+					$file = str_replace($catch['body'], $rep["msg"], $file);
 				}else{
-					$file = str_replace($catch[4], null, $file);
+					$file = str_replace($catch['body'], null, $file);
 				}
 			}
 		}
-		$pet2 = "#<%catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+%>(.*?)<%catch%>#s";
-		$pet = "#<Catch ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"][^>]+>(.*?)</Catch>#s";
-		$file = preg_replace($pet, "$3", $file);
-		return $file = $this->setVar("*", $file);
+
+		$pet = "/<List ['\"](?<variable>[a-zA-Z]+)['\"] from ['\"](?<content>[-a-z]+)['\"](?<attributes>.*?)(?:|[^>]+)>(.*?)<\/List>/s";
+		$file = preg_replace($pet, "$4", $file);
+		return $this->setVar("*", $file);
 	}
 
 	private function catchMode($tag): array
@@ -471,7 +477,7 @@ class Template extends templateSettings {
 		$this->include();
 		$this->php();
 		$this->loop();
-		$this->catch();
+		$this->list();
 		$this->widgets();
 		$this->replaceVars();
 		$this->if();
