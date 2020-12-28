@@ -23,9 +23,7 @@ class Blog {
 		->where("name", "blog_name")
 		->whereOr("name", "blog_desc")
 		->whereOr("name", "language");
-		$bloginfo = $bloginfo->execute()->fetchAll('column');
-		
-		[$blogname, $blogdesc, $bloglang] = $bloginfo;
+		[$blogname, $blogdesc, $bloglang] = $bloginfo->execute()->fetchAll('column');
 
 		$this->template->var("blog:name", $blogname);
 		$this->template->var("blog:desc", $blogdesc);

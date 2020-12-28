@@ -28,24 +28,32 @@ class Query {
   
   static function posts(array $options = []): array
   {
-    $db = DB::init();
+    global $qb;
+    exit($qb);
     extract($options);
     $sql = "SELECT post.* FROM `posts` as post";
+
+    $query = $qb->select("post", "p")->from('posts');
 
     if(isset($cat) && $cat = (array)$cat){
       if(count($cat) <= 1){
         $cat = $cat[0];
-        $sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat')";
+        $query = $query->join("post_cats as pcat","p.id = pcat.id")->join("category as cat", "pcat.id = cat.id")->where('cat.name', $cat)->whereOr('cat.term', $cat)->whereOr('cat.id', $cat);
+        //$sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat')";
       }else{
         $child = $cat['child'];
         $cat = $cat[0];
-        $sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat') LEFT JOIN `category` AS child ON (child.group = cat.id) WHERE child.name = '$child'";
+        $query = $query->join("post_cats as pcat","p.id = pcat.id")->join("category as cat", "pcat.id = cat.id")->join("category as child","child.group = cat.id")->where('cat.name', $cat)->whereOr('cat.term', $cat)->whereOr('cat.id', $cat)->whereAnd('child.name', $child);
+        //$sql .= " INNER JOIN `post_cats` AS cats ON (post.id = cats.post_id) INNER JOIN `category` AS cat ON (cats.cat_id = cat.id) AND (cat.name = '$cat' OR cat.term = '$cat' OR cat.id = '$cat') LEFT JOIN `category` AS child ON (child.group = cat.id) WHERE child.name = '$child'";
       }
+
     }
+
+
     
     
 
-    if(isset($is_page) && $is_page){
+    /*if(isset($is_page) && $is_page){
       $SQL .= " WHERE post.type = '1'";
     }
 
@@ -65,6 +73,7 @@ class Query {
       $sql .= " LEFT JOIN `post_tags` AS tag ON (post.id = tag.post_id) LEFT JOIN `post_cats` AS cats ON (post.id = cats.post_id) LEFT JOIN `category` AS cat ON (cats.cat_id = cat.id) WHERE post.title LIKE '%$search%' OR tag.name LIKE '%$search%' OR cat.name LIKE '%$search%' GROUP BY post.id";
 
     }
+    */
 
     /*
       Array $order = array(
@@ -93,7 +102,7 @@ class Query {
       $sql .= " ORDER BY $advancedOrder";
     }*/
 
-    if(isset($limit)){
+    /*if(isset($limit)){
       $sql .= " ORDER BY DATE(post.date) ASC LIMIT 999";
     }
 
@@ -101,7 +110,10 @@ class Query {
     
     if($sql && $query = $db->query($sql)){
       return($query->fetchAll(\PDO::FETCH_ASSOC));
-    }
+    }*/
+    exit($query);
+    $query->execute()->fetchAll('assoc');
+
     return [];
   }
   static function category($options = []): array
