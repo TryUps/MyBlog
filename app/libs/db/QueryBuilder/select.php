@@ -4,6 +4,7 @@
   class Select {
     protected $db;
     protected $sql;
+    protected $query;
     private array $fields = [];
     private array $table = [];
     private array $where = [];
@@ -23,24 +24,6 @@
       $this->db = $db;
       $this->fields = (array)$fields;
       return $this;
-    }
-
-    function __toString()
-    {
-      $this->sql = sprintf("SELECT %s FROM %s",
-      join(', ', $this->fields),
-      join(', ', $this->table));
-
-      foreach($this->join as $join){
-        $this->sql .= " $join[type] JOIN $join[table] ON " . join(" AND ", $join['on']);
-      }
-
-      if($this->where){
-        $where = $this->getWhere();
-        $this->sql .= " $where";
-      }
-
-      return $this->sql;
     }
 
     public function from(string $table, ?string $alias = null): self
@@ -157,12 +140,75 @@
       return $this;
     }
 
-    function __destruct()
+    public function order(): self
     {
-      $sql = $this->__toString();
+      return $this;
+    }
+
+    public function group(): self
+    {
+      return $this;
+    }
+
+    private function sql(): string
+    {
+      $sql = sprintf("SELECT %s FROM %s",
+      join(', ', $this->fields),
+      join(', ', $this->table));
+
+      foreach($this->join as $join){
+        $sql .= " $join[type] JOIN $join[table] ON " . join(" AND ", $join['on']);
+      }
+
+      if($this->where){
+        $where = $this->getWhere();
+        $sql .= " $where";
+      }
+
+      return $sql;
+    }
+
+    function __toString()
+    {
+      return $this->sql();
+    }
+
+    function execute(){
+      $sql = $this->sql();
       $query = $this->db->prepare($sql);
       if($query->execute()){
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        $this->query = $query;
+        return $this;
       }
+    }
+
+    function fetch($mode = 'both'){
+      $mode = $this->fetchMode($mode);
+      return $this->query->fetch($mode);
+    }
+
+    function fetchAll($mode = 'both'){
+      $mode = $this->fetchMode($mode);
+      return $this->query->fetchAll($mode);
+    }
+
+    private function fetchMode($mode)
+    {
+      $mode = strtolower($mode);
+      if($mode === "obj")return \PDO::FETCH_OBJ;
+      if($mode === "num")return \PDO::FETCH_NUM;
+      if($mode === "both")return \PDO::FETCH_BOTH;
+      if($mode === "into")return \PDO::FETCH_LAZY;
+      if($mode === "lazy")return \PDO::FETCH_INTO;
+      if($mode === "named")return \PDO::FETCH_NAMED;
+      if($mode === "assoc")return \PDO::FETCH_ASSOC;
+      if($mode === "class")return \PDO::FETCH_CLASS;
+      if($mode === "bound")return \PDO::FETCH_BOUND;
+      if($mode === "column")return \PDO::FETCH_COLUMN;
+    }
+
+    function __destruct()
+    {
+      return null;
     }
   }

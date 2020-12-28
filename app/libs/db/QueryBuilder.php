@@ -9,7 +9,8 @@
   use \PDO as PDO;
   use \PDOException as PDOException;
   
-  class QueryBuilder extends PDO {
+  class QueryBuilder {
+    protected $db;
 
     function __construct(Array $configs = [])
     {
@@ -26,26 +27,29 @@
       }
       try {
         if(isset($username,$password)){
-          parent::__construct($conn,$username,$password);
+          $db = new PDO($conn, $username, $password);
         }else{
-          parent::__construct($conn);
+          $db = new PDO($conn);
         }
         if(isset($options)){
           foreach($options as $option => $value){
-            parent::setAttribute($option, $value);
+            $db->setAttribute($option, $value);
           }
         }
+
+        $this->db = $db;
+
       } catch (PDOException $e){
         return Error::DB($e);
       }
     }
 
     function select(...$fields): Select
-    { 
-      $fields = empty($fields) ? $fields : ['*'];
+    {
+      $fields = !empty($fields) ? $fields : ['*'];
       $fields = is_array($fields[0]) ? $fields[0] : $fields;
 
-      return new Select($fields, $this);
+      return new Select($fields, $this->db);
     }
     function insert(...$fields)
     {

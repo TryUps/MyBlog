@@ -5,9 +5,12 @@ use MyB\Permalink as Link;
 
 class Blog {
 	private $db;
+	private $qb;
 	private $template;
 
 	public function __construct(Array $options) {
+		global $qb;
+		$this->qb = $qb;
 		$this->db = $options['db'];
 		$this->template = $options['template'];
 		$this->action = $options['action'];
@@ -17,14 +20,19 @@ class Blog {
 	}
 
 	public function generate_template_variables(): void
-	{
-		$blogname = $this->db->select("preferences", ["name" => "blog_name"]);
-		$blogdesc = $this->db->select("preferences", ["name" => "blog_desc"]);
-		$bloglang = $this->db->select("preferences", ["name" => "language"]);
-		$this->template->var("blog:name", $blogname->value);
-		$this->template->var("blog:desc", $blogdesc->value);
+	{	
+		$bloginfo = $this->qb->select('value')->from('preferences')
+		->where("name", "blog_name")
+		->whereOr("name", "blog_desc")
+		->whereOr("name", "language");
+		$bloginfo = $bloginfo->execute()->fetchAll('column');
+		
+		[$blogname, $blogdesc, $bloglang] = $bloginfo;
+
+		$this->template->var("blog:name", $blogname);
+		$this->template->var("blog:desc", $blogdesc);
 		$this->template->var("blog:url", Link::Home());
-		$this->template->var("blog:lang", $bloglang->value);
+		$this->template->var("blog:lang", $bloglang);
 		$this->template->var('blog:style', Link::Home() . 'static/style.css');
 		$this->template->var("blog:url", Link::Home());
 		$this->template->var("link:actual", Link::Actual());
@@ -99,6 +107,24 @@ class Blog {
 		}
 	}
 
+	private function renderImage(){
+		$accepted = explode(',', $_SERVER["HTTP_ACCEPT"]);
+		$accepted = $accepted[0];
+		$file = $this->params['picture'].".".$this->params['ext'];
+		if($accepted === "text/html"){
+			echo<<<"HTML"
+				<h1>MyImage</h1>
+				<img src='./$file' />
+			HTML;
+		}else{
+			header("Content-Type: image/jpeg");
+			$file = "./public/images/$file";
+			$file = realpath(__DIR__ . '/../../' . $file);
+			$imagedata = file_get_contents($file);
+			return exit($imagedata);
+		}
+	}
+
 	private function renderStatic(){
 		if(isset($this->params['file']) && !empty($this->params['file'])){
 			$blog_template = Preferences::{'blog_template'}();
@@ -127,6 +153,9 @@ class Blog {
 				break;
 			case 'search':
 				return $this->renderSearch();
+				break;
+			case 'image':
+				return $this->renderImage();
 				break;
 			case 'static':
 				return $this->renderStatic();

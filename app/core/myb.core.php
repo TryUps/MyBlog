@@ -7,8 +7,6 @@
 
   $db = new DB();
 
-  $dbo = new DBO();
-
   $qb = new QueryBuilder([
     "client" => "mysql",
     "connection" => [
@@ -25,10 +23,11 @@
     ]
   ]);
 
+  $_GLOBALS['qb'] = $qb;
+
   $select = $qb->select('p.*')->from('posts','p');
-  foreach($select as $post){
-    var_dump($post);
-  }
+
+ 
 
   $timezone = $db->select("preferences", ["name" => "timezone"]);
   if($timezone){

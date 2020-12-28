@@ -4,8 +4,7 @@
     $class = strtolower($class);
     $class = explode('\\', $class);
 
-    extract(getter_class($class));
-
+    [$dir, $file] = getter_class($class);
 
     $dir = realpath(dirname(__FILE__).$dir);
     $file = $dir.DIRECTORY_SEPARATOR.$file;
@@ -48,7 +47,7 @@
         $file = $className.spl_autoload_extensions();
         break;
     }
-    return ["dir" => $dir, "file" => $file];
+    return [$dir, $file];
   }
 
   function array_clone(Array $needles, Array $haystack = []):bool
