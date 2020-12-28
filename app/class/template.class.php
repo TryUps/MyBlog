@@ -263,13 +263,17 @@ class Template extends templateSettings {
 		foreach($catches as $catch){
 			switch($catch['content']){
 				case 'articles':
+					$pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+					$limit = 10;
+					$offset = ($limit * $pageNumber) - $limit;
 					$query = [
-						"limit" => 10,
+						"limit" => $limit,
+						"offset" => $offset
 					];
 					break;
 				case 'single-article':
 					if(isset($_REQUEST['postDate']) && isset($_REQUEST['postName'])){
-						$postDate = date("Y-m", strtotime($_REQUEST['postDate']));
+						$postDate = date("m/Y", strtotime($_REQUEST['postDate']));
 						$postName = $_REQUEST['postName'];
 						$query = [
 							"date" => $postDate,
@@ -280,19 +284,23 @@ class Template extends templateSettings {
 					break;
 				case 'articles-by-cat':
 					$cat = $_REQUEST['cat'];
-
+					$pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+					$limit = 10;
+					$offset = ($limit * $pageNumber) - $limit;
 					if(sizeof($cat) > 1){
 						$query = [
 							"cat" => [
 								$cat[0],
 								"child" => $cat[1]
 							],
-							"limit" => 10
+							"limit" => $limit,
+							"offset" => $offset
 						];
 					}else{
 						$query = [
 							"cat" => $cat[0],
-							"limit" => 10
+							"limit" => $limit,
+							"offset" => $offset
 						];
 					}
 					break;
@@ -301,21 +309,29 @@ class Template extends templateSettings {
 					break;
 				case 'articles-by-tag':
 					$tag = $_REQUEST['tag'];
+					$pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+					$limit = 10;
+					$offset = ($limit * $pageNumber) - $limit;
 					$query = [
-						"tags" => [$tag]
+						"tags" => [$tag],
+						"limit" => $limit,
+						"offset" => $offset
 					];
 					break;
 				case 'tags':
 					$query = Query::tags();
 					break;
-				case 'search-posts':
+				case 'search':
 					$searchTerm = $_GET['q'];
+					$pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+					$limit = 10;
+					$offset = ($limit * $pageNumber) - $limit;
 					$query = [
-						"search" => $searchTerm
+						"search" => $searchTerm,
+						"limit" => $limit,
+						"offset" => $offset
 					];
-					$countResults = sizeof($query);
 					$this->__set('search:term', $searchTerm);
-					$this->__set('search:results', $countResults);
 					break;
 				default:
 					$not_match_method = "This method not found, please check MyBlog Documentation";
@@ -351,10 +367,13 @@ class Template extends templateSettings {
 
 			if(array_key_exists('tag', $catchMode)){
 				$tag = $catchMode['category'];
-				#null
 			}
 
 			$query = Query::posts($query);
+			if($catch['content'] === "search"){
+				$countResults = sizeof($query);
+				$this->__set('search:results', $countResults);
+			}
 
 			$rep = [];
 			if(!isset($query))return;

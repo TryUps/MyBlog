@@ -94,8 +94,8 @@ class Query {
       //$date = new \ArrayObject( $dates );
       //$date = $date->getIterator();
       $date = strtotime($date) ? $date : str_replace('/','-', $date);
-      $obj_date = \DateTime::createFromFormat('m-Y', $date);
-      $obj_date = $obj_date->getTimestamp();
+      /*$obj_date = \DateTime::createFromFormat('m-Y', $date);
+      $obj_date = $obj_date->getTimestamp();*/
       
       $query->whereLike($qb->date('date', '%d-%m-%Y %H:%i:%s'), '%'.$date.'%');
     }
