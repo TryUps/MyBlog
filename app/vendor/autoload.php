@@ -28,19 +28,20 @@
     $className = array_pop($class);
     switch(true){
       case array_clone(['db'], $class):
-        $dir = "/../libs/sql/";
+        $dir = "/../libs/db/";
         $file = $className.".php";
         break;
       case array_clone(['db','querybuilder'], $class):
+        $dif = array_shift($class);
         $class = implode('/', $class);
-        $dir = "/../libs/sql/".$class;
-        $file = $className.".php";
+        $dir = "/../libs/db/$class";
+        $file = "$className.php";
         break;   
       case array_clone(['views'], $class):
         $dif = array_shift($class);
         $difClass = implode('/', $class);
         $dir = "/../views/$difClass/";
-        $file = $className.".php";
+        $file = "$className.php";
         break;
       default:
         $dir = "/../class/";

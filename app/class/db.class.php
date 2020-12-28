@@ -8,7 +8,7 @@ use MyB\DBConfig as DBConfig;
 
 
 class DB extends DBConfig {
-  private $db;
+  protected $db;
   private static $instance;
 
   public function __construct(\PDO $db = null){
