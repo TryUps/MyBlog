@@ -5,13 +5,11 @@ use MyB\Permalink as Link;
 
 class Blog {
 	private $db;
-	private $qb;
 	private $template;
 
 	public function __construct(Array $options) {
 		global $qb;
-		$this->qb = $qb;
-		$this->db = $options['db'];
+		$this->db = $qb;
 		$this->template = $options['template'];
 		$this->action = $options['action'];
 		$this->params = $options['params'];
@@ -21,7 +19,7 @@ class Blog {
 
 	public function generate_template_variables(): void
 	{	
-		$bloginfo = $this->qb->select('value')->from('preferences')
+		$bloginfo = $this->db->select('value')->from('preferences')
 		->where("name", "blog_name")
 		->whereOr("name", "blog_desc")
 		->whereOr("name", "language");
