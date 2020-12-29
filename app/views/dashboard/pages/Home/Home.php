@@ -6,6 +6,7 @@
       <div class="content">
         <div class="box long-box">
           <div class="box">
+            <h2><?=__('Recent activity');?></h2>
             <h1>15%</h1>
           </div>
         </div>
