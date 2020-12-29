@@ -1,7 +1,8 @@
 
     <section class="container" id="dynamic-container">
       <div class="home-title">
-        <h1>Welcome back, <b><?= $fullname ?>.</b></h1>
+        <h1><?=__("Welcome back, %s.", $fullname);?></b></h1>
+        <h2><?=__("Hello world welcome to MyBlog %s", '1.0');?></h2>
       </div>
       <div class="content">
         <div class="box section-container">

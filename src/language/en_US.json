@@ -1,17 +1,8 @@
 {
-  "language.en_US": {
-    "dash.login": {
-      "login": "Entrar"
-    },
-    "dash.home": {
-      "hello_world": "Hello World",
-      "hello_use": "Hello, %s"
-    },
-    "error": {
-      "404": {
-        "title": "Error %s",
-        "message": "Error %s not found. \n Page: %s"
-      }
-    }
+  "name": "English (EUA)",
+  "code": "en_US",
+  "translations":{
+    "Hello world, welcome to MyBlog %s!": "Hello world welcome to MyBlog %s!",
+    "Welcome back, %s.": "Welcome back, %s."
   }
 }

@@ -121,7 +121,7 @@ class Template extends templateSettings {
 
 	private function php($code = null) {
 		$file = $code ? $code : $this->getVar('*');
-		$pattern = "#<php>(.*?)</php>#s";
+		$pattern = "/<php>(.*?)<\/php>/s";
 		if (preg_match_all($pattern, $file, $results, PREG_SET_ORDER)) {
 			foreach ($results as &$php) {
 				ob_start();
@@ -147,7 +147,7 @@ class Template extends templateSettings {
 
 	private function import($file = null) {
 		$file = $file ? $file : $this->getVar('*');
-		$pattern = "#import ['\"](.*)['\"];#";
+		$pattern = "/import ['\"](.*)['\"];/i";
 		if (preg_match_all($pattern, $file, $results, PREG_SET_ORDER)) {
 			foreach ($results as &$import) {
 				if ($fileadd = $this->load($import[1])) {
@@ -213,9 +213,31 @@ class Template extends templateSettings {
 		return false;
 	}
 
+	private function Menu($file = null){
+		$file = $file ? $file : $this->getVar('*');
+		$pattern = "/<Menu (?<attributes>.*?)\/>/i";
+		$customMenu = [];
+		if(preg_match_all($pattern, $file, $menus, PREG_SET_ORDER)){
+			foreach($menus as $menu){
+				$menuAttr = $this->catchMode($menu['attributes']);
+				if(array_key_exists('name', $menuAttr)){
+					$classNames = array_key_exists('className', $menuAttr) ? $menuAttr['className'] : '';
+					array_push($customMenu,[ "menu" =>[
+						"name" => $menuAttr['name'],
+						"class" => $classNames
+					]]);
+				}
+			}
+		}
+		Menu::create($customMenu);
+
+		$file = preg_replace($pattern, "<div>aaaa</div>", $file);
+		return $file = $this->setVar("*", $file);
+	}
+
 	private function loop($file = null, Array $loop_array = array()) {
 		$file = $file ? $file : $this->getVar('*');
-		$pattern = "@<Loop (?P<var>[a-zA-Z]+) in (?P<array>[a-zA-Z]+)>\s*(\s*.*?\s*)</Loop>@si";
+		$pattern = "/<Loop (?P<var>[a-zA-Z]+) in (?P<array>[a-zA-Z]+)>\s*(\s*.*?\s*)<\/Loop>/si";
 		preg_match_all($pattern, $file, $results, PREG_SET_ORDER);
 		foreach ($results as $result) {
 			$results = array();
@@ -252,6 +274,7 @@ class Template extends templateSettings {
 			return;
 		}
 	}
+
 
 	private function list($file = null){
 		$db = DB::init();
@@ -423,15 +446,14 @@ class Template extends templateSettings {
 	private function catchMode($tag): array
 	{
 		$catchMode = array();
-		$attrArr = explode(" ", $tag);
-		array_shift($attrArr);
-		foreach($attrArr as $attr){
-			$pattern = "#(?<name>[a-zA-Z]+)=['\"](?<value>[a-zA-Z0-9,.]+)['\"]#";
-			preg_match($pattern, $attr, $attrRes);
-			if($attrRes){
-				$catchMode[strtolower($attrRes['name'])] = strtolower($attrRes['value']);
+		$pattern = "/(?<attribute>[a-zA-Z]+)=['\"](?<value>.*?)['\"]/i";
+
+		if(preg_match_all($pattern, $tag, $tags, PREG_SET_ORDER)){
+			foreach($tags as $attribute){
+				$catchMode[$attribute['attribute']] = $attribute['value'];
 			}
 		}
+ 
 		return $catchMode;
 	}
 
@@ -495,6 +517,7 @@ class Template extends templateSettings {
 		$this->require();
 		$this->include();
 		$this->php();
+		$this->Menu();
 		$this->loop();
 		$this->list();
 		$this->widgets();

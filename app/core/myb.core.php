@@ -1,8 +1,5 @@
 <?php
   use MyB\DB as DB;
-  use MyB\DBO as DBO;
-  use MyB\Lang as Lang;
-  use MyB\JWT_GEN as JWT;
   use MyB\DB\QueryBuilder;
 
   $db = new DB();
@@ -22,22 +19,22 @@
       ]
     ]
   ]);
-
   $_GLOBALS['qb'] = $qb;
-
-  $select = $qb->select('p.*')->from('posts','p');
-
  
-
-  $timezone = $db->select("preferences", ["name" => "timezone"]);
-  if($timezone){
-    $timezone = $timezone->value;
-    date_default_timezone_set($timezone);
+  if($timezone = $qb->select("value")->from('preferences')->where('name', 'timezone')->execute()){
+    $timezone = $timezone->fetch('column');
+    if($timezone){
+      date_default_timezone_set($timezone);
+    }else{
+      date_default_timezone_set("UTC");
+    }
   }else{
-    date_default_timezone_set("America/Sao_Paulo");
+    date_default_timezone_set("UTC");
   }
 
-  JWT::giveKey();
+  require_once __DIR__ . '/../libs/lang/lang.config.php';
+
+  require_once __DIR__ . '/../libs/jwt/generate.php';
 
   require_once __DIR__ . '/../libs/theme/theme.php';
 

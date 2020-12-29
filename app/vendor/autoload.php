@@ -42,6 +42,12 @@
         $dir = "/../views/$difClass/";
         $file = "$className.php";
         break;
+      case array_clone(['services','auth'], $class):
+        $dif = array_shift($class);
+        $difClass = implode('/', $class);
+        $dir = "/../services/$difClass";
+        $file = "$className.php";
+        break;
       default:
         $dir = "/../class/";
         $file = $className.spl_autoload_extensions();

@@ -188,8 +188,11 @@ class User {
       ];
       if($jwt = JWT::token($token)){
         if($jwtDecoded = self::checkLogin($jwt)){
-          setcookie("token", $jwt, $issued_at, '/',$issuer, false, false);
-          setcookie("myb__user_id", $jwtDecoded->data->id, $issued_at, '/', $issuer, false, false);
+          if(isset($_COOKIE['toke'], $_COOKIE['myb__user_id'])){
+            unset($_COOKIE['toke'], $_COOKIE['myb__user_id']);
+          }
+          setcookie("token", $jwt, $expiration_time, './',$issuer, false, false);
+          setcookie("myb__user_id", $jwtDecoded->data->id, $expiration_time, './', $issuer, false, false);
           return true; 
         }
         return false;

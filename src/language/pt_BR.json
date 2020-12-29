@@ -1,14 +1,8 @@
 {
   "name": "Português (Brasil)",
   "code": "pt_BR",
-  "dash": {
-    "hello_world": "Olá Mundo!",
-    "login": ""
-  },
-  "error": {
-    "404": {
-      "title": "Error %s",
-      "message": "Error %s not found. \n Page: %s"
-    }
+  "translations":{
+    "Hello world, welcome to MyBlog %s!": "Olá mundo, bem vindo(a) ao MyBlog %s!",
+    "Welcome back, %s.": "Bem vindo(a) de volta, %s."
   }
 }
