@@ -1,3 +1,6 @@
+<?php
+  define('title', 'Write article');
+?>
 <form class="create-post" action="./articles/create" method="POST" enctype="multipart/form-data">
   <div class="content">
     <input type="text" name="post_title" id="post_title" placeholder="Seu titulo...">
@@ -54,7 +57,7 @@
       <figure class="thumbnail">
         <picture class="thumbnail">
           <img src="https://image.tmdb.org/t/p/w342/dRV58n6krTWxVVLrEX8FDGYTPU5.jpg" alt="" class="cover" />
-          <button class="cover-btn" type="button">Alterar capa</button>
+          <button class="cover-btn btn blur-btn" type="button">Alterar capa</button>
         </picture>
         <h1 class="pic-title">Publish</h1>
       </figure>
@@ -72,7 +75,7 @@
           <span>22 de dezembro de 2020 ás 00:15</span>
         </div>
         <button class="btn gradient-btn">
-          <i class="fas fa-cog"></i>
+          <i class="fas fa-pen-alt"></i>
           <span>Publish</span>
         </button>
       </div>

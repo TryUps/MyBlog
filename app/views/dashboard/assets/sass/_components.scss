@@ -24,6 +24,11 @@ a.btn {
 
     &:hover {
       background-position: right bottom;
+      color: #fff;
+
+      i {
+        color: #000;
+      }
     }
 
     i {
@@ -50,6 +55,12 @@ a.btn {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    transition: all .5s;
+
+    &:hover {
+      background: rgba(255,255,255,0.5);
+      color: #1a1a1a;
+    }
   }
 
   &.close-btn {

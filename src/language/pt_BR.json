@@ -1,8 +1,10 @@
 {
   "name": "Português (Brasil)",
   "code": "pt_BR",
+  "version": 1.0,
   "translations":{
     "Hello World, welcome to MyBlog %s!": "Olá Mundo, bem vindo(a) ao MyBlog %s!",
-    "Welcome back, %s.": "Bem vindo(a) de volta, %s."
+    "Welcome back, %s.": "Bem vindo(a) de volta, %s.",
+    "Write article": "Escrever artigo"
   }
 }

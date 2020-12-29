@@ -258,12 +258,18 @@ header.top-header {
   grid-area: header;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 30px;
   width: 100%;
   height: 60px;
   top: 0;
   background: #fff;
   border-bottom: 1px solid #eee;
+}
+header.top-header .heading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 header.top-header .primary-header {
   display: flex;
@@ -274,14 +280,23 @@ header.top-header .primary-header input {
   border-radius: 20px 0 0 20px;
   width: 350px;
   padding: 10px 20px;
+  background-color: #F2F2F2;
+  transition: all 0.5s;
+}
+header.top-header .primary-header input:focus {
+  background-color: #fff;
+}
+header.top-header .primary-header input:focus + button {
+  background-color: #fff;
 }
 header.top-header .primary-header input + button {
   border: 1px solid #eee;
-  background: #fff;
+  background: #f2f2f2;
   color: #aaa;
   border-radius: 0 20px 20px 0;
   padding: 10px 20px;
   margin-left: -5px;
+  transition: all 0.5s;
 }
 
 main {
@@ -324,8 +339,19 @@ main .container .content .box {
   display: flex;
   background: #fff;
   border: 1px solid #eee;
-  padding: 15px;
+  padding: 10px;
   border-radius: 15px;
+}
+main .container .content .box.long-box {
+  display: flex;
+  background: #DAE6FF;
+  grid-column: 1/span 4;
+}
+main .container .content .box.long-box .box {
+  width: calc(100% / 4);
+  border-radius: 15px;
+  background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);
+  color: #fff;
 }
 main .container .content .box + .box {
   margin-left: 20px;
@@ -796,14 +822,8 @@ button.ico-btn span, a.ico-btn span {
   transform: translateX(-50%);
   position: absolute;
   bottom: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #ccc;
-  font-weight: bold;
-  border-radius: 10px;
   padding: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
 }
 .create-post .sidebar .side-box figure.thumbnail h1.pic-title {
   position: absolute;
@@ -913,11 +933,13 @@ button.ico-btn span, a.ico-btn span {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
-  padding: 30px;
+  padding: 0 30px;
 }
 .preferences .preference-divider {
   display: flex;
   flex-direction: column;
+  width: calc(100% / 2);
+  margin-right: 2em;
 }
 .preferences .preference-divider:last-child {
   margin-right: 0;
@@ -940,6 +962,7 @@ button.ico-btn span, a.ico-btn span {
 }
 .preferences .pref-title {
   padding: 10px 0;
+  color: #555;
   border-bottom: 1px solid #eee;
   margin-bottom: 10px;
 }
@@ -975,7 +998,7 @@ button.ico-btn span, a.ico-btn span {
   margin-top: 15px;
   border-radius: 25px;
   border: 1px solid #ccc;
-  padding: 6px 10px;
+  padding: 6px 15px;
   width: 350px;
   /*&:focus ~ label,
   &:active ~ label {
@@ -1079,13 +1102,18 @@ nav.custom-nav ul li a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-  color: #fff;
+  background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  background-size: 250px 250px;
+  color: rgba(0, 0, 0, 0.5);
   border-radius: 50px;
   font-weight: bold;
   padding: 6px 15px;
   text-decoration: none;
   border: 1px solid #fff;
+  transition: all 0.5s;
+}
+nav.custom-nav ul li a:hover {
+  background-position: right bottom;
 }
 nav.custom-nav ul li a.active {
   background: #eee;
@@ -1148,6 +1176,11 @@ a.btn.gradient-btn:active {
 button.btn.gradient-btn:hover,
 a.btn.gradient-btn:hover {
   background-position: right bottom;
+  color: #fff;
+}
+button.btn.gradient-btn:hover i,
+a.btn.gradient-btn:hover i {
+  color: #000;
 }
 button.btn.gradient-btn i,
 a.btn.gradient-btn i {
@@ -1173,6 +1206,12 @@ a.btn.blur-btn {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  transition: all 0.5s;
+}
+button.btn.blur-btn:hover,
+a.btn.blur-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: #1a1a1a;
 }
 button.btn.close-btn,
 a.btn.close-btn {

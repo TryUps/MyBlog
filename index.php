@@ -1,8 +1,8 @@
 <?php
   /**
-   * MyBlog
-   * Version: 1.0.0
-   * 
+   * @package MyBlog
+   * @version 1.0.0
+   * @copyright TryUps © 2020 – Todos os direitos reservados.
    */
   $app = file_get_contents(__DIR__ . '/package.json');
   $app = json_decode($app, true);

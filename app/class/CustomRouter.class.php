@@ -26,9 +26,13 @@
             "params" => $params
           ];
           if(is_callable($route['callback'])){
-            return call_user_func_array($route['callback'], array($req));
+            return call_user_func_array($route['callback'], array($req,null));
           }
         }
       }
+    }
+
+    static function Clear(){
+      return self::$routes = [];
     }
   }

@@ -23,11 +23,29 @@
       }
     }
 
-    function translate($text, ...$vars){
-      if($vars){
-        $text = isset($this->lang[$text]) ? $this->lang[$text] : $text;
-        return sprintf($text, ...$vars);
+    function customTranslate($text, ...$params){
+      $pattern = "/[$][0-9]/";
+      $arr = [];
+      array_push($arr, ...$params);
+      $text = preg_replace_callback($pattern, function($match) use($arr){
+        $match = str_replace('$','', $match[0]);
+        $text = isset($arr[$match-1]) ? $arr[$match-1] : null;
+        return $text;
+      }, $text);
+      return $text;
+    }
+
+    function translate($text, ...$vars): string
+    {
+      $text = isset($this->lang[$text]) ? $this->lang[$text] : $text;
+      if(preg_match("/[$][0-9]{1,3}/",$text, $match) && isset($match)){
+        $text = $this->customTranslate($text, ...$vars);
+      }else{
+        $text = sprintf($text, ...$vars);
       }
+      $text = htmlspecialchars_decode($text, ENT_NOQUOTES);
+      $text = utf8_decode($text);
+      return $text;
     }
 
     public static function __callStatic($method, $args){

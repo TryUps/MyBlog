@@ -1,7 +1,7 @@
 <?php
   /**
    * @package MyBlog
-   * ? Copyright ₢ 2020 – TryUps Inc.
+   * ? Copyright © 2020 – TryUps Inc.
    */
 
   if(!defined('app')){

@@ -1,6 +1,7 @@
 {
   "name": "English (EUA)",
   "code": "en_US",
+  "version": 1.0,
   "translations":{
     "Hello World, welcome to MyBlog %s!": "Hello World, welcome to MyBlog %s!",
     "Welcome back, %s.": "Welcome back, %s."

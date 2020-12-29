@@ -292,12 +292,19 @@ header.top-header {
   grid-area: header;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 30px;
   width: 100%;
   height: 60px;
   top: 0;
   background: #fff;
   border-bottom: 1px solid #eee;
+
+  .heading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
 
   .primary-header {
     display: flex;
@@ -308,15 +315,27 @@ header.top-header {
       border-radius: 20px 0 0 20px;
       width: 350px;
       padding: 10px 20px;
-    }
+      background-color: #F2F2F2;
+      transition: all .5s;
 
-    input + button {
-      border: 1px solid #eee;
-      background: #fff;
-      color: #aaa;
-      border-radius: 0 20px 20px 0;
-      padding: 10px 20px;
-      margin-left: -5px;
+      &:focus {
+        background-color: #fff;
+
+        & + button {
+          background-color: #fff;
+        }
+
+      }
+
+      & + button {
+        border: 1px solid #eee;
+        background: #f2f2f2;
+        color: #aaa;
+        border-radius: 0 20px 20px 0;
+        padding: 10px 20px;
+        margin-left: -5px;
+        transition: all .5s;
+      }
     }
   }
 }
@@ -364,8 +383,20 @@ main {
         display: flex;
         background: #fff;
         border: 1px solid #eee;
-        padding: 15px;
+        padding: 10px;
         border-radius: 15px;
+
+        &.long-box {
+          display: flex;
+          background: #DAE6FF;
+          grid-column: 1 / span 4;
+          .box {
+            width: calc(100% / 4);
+            border-radius: 15px;
+            background-image: linear-gradient(-225deg, #3D4E81 0%, #5753C9 48%, #6E7FF3 100%);
+            color: #fff;
+          }
+        }
       }
     
       .box + .box {
@@ -905,14 +936,8 @@ button.ico-btn, a.ico-btn {
             transform: translateX(-50%);
             position: absolute;
             bottom: 10px;
-            background: rgba(0,0,0,0.6);
-            color: #ccc;
-            font-weight: bold;
-            border-radius: 10px;
             padding: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
           }
 
         }
@@ -1039,11 +1064,13 @@ button.ico-btn, a.ico-btn {
   flex-direction: row;
   justify-content: space-between;
   margin-top: 20px;
-  padding: 30px;
+  padding: 0 30px;
 
   .preference-divider {
     display: flex;
     flex-direction: column;
+    width: calc(100% / 2);
+    margin-right: 2em;
 
     &:last-child {
       margin-right: 0;
@@ -1072,6 +1099,7 @@ button.ico-btn, a.ico-btn {
 
   .pref-title {
     padding: 10px 0;
+    color: #555;
     border-bottom: 1px solid #eee;
     margin-bottom: 10px;
   }
@@ -1112,7 +1140,7 @@ button.ico-btn, a.ico-btn {
       margin-top: 15px;
       border-radius: 25px;
       border: 1px solid #ccc;
-      padding: 6px 10px;
+      padding: 6px 15px;
       width: 350px;
 
       & ~ label {
@@ -1231,13 +1259,20 @@ nav.custom-nav {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-        color: #fff;
+        background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+        //background-image: linear-gradient(to top, #e14fad 0%, #f9d423 100%);
+        background-size: 250px 250px;
+        color: rgba(0,0,0,0.5);
         border-radius: 50px;
         font-weight: bold;
         padding: 6px 15px;
         text-decoration: none;
         border: 1px solid #fff;
+        transition: all .5s;
+
+        &:hover {
+          background-position: right bottom;
+        }
 
         &.active {
           background: #eee;

@@ -18,10 +18,11 @@
     require __DIR__ . '/pages/Articles/CreateArticle.php';
   });
 
-  Router::Route('/articles/edit/:id', function() use($user){
+  Router::Route('/articles/edit/:id', function($req) use($user){
     if(!defined('sidebar')){
       define("sidebar", false);
     }
+    echo $req['id'];
     require __DIR__ . '/pages/Articles/EditArticle.php';
   });
 
@@ -37,7 +38,7 @@
     require __DIR__ . '/pages/Category/Category.php';
   });
 
-  Router::Route('/preferences', function() use($user){
+  Router::Route('/(preferences|preferences/(?<page>.*?))', function($req) use($user){
     require __DIR__ . '/pages/Preferences/Preferences.php';
   });
 

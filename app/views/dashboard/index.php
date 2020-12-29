@@ -11,9 +11,16 @@
   require_once __DIR__ . '/layout/header.php';
   require_once __DIR__ . '/layout/sidebar.php';
 
+  if(defined('title')){
+    $title = __(title);
+  }else{
+    $title = '';
+  }
   echo<<<HTML
     <header class="top-header">
-      <div class="heading"></div>
+      <div class="heading">
+        <h1>{$title}</h1>
+      </div>
       <div class="primary-header">
         <form action="" method="get">
           <input type="text" placeholder="Pesquisar no MyBlog...">
