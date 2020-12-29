@@ -1,14 +1,8 @@
 <?php
   /**
-   * @package myblog
-   * # Copyright TryUps Inc.
-   *
+   * @package MyBlog
+   * ? Copyright ₢ 2020 – TryUps Inc.
    */
-
-  error_reporting(E_ALL);
-  if (function_exists('date_default_timezone_set') && function_exists('date_default_timezone_get')) {
-      date_default_timezone_set(@date_default_timezone_get());
-  }
 
   if(!defined('app')){
     return exit('Not defined MyBlog package file.');

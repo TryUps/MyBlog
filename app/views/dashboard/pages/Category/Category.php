@@ -30,3 +30,7 @@
     </tbody>
   </table>
 </section>
+<div class="preference-divider submit-region">
+    <button class="ico-btn pref-btn">
+      <span>Salvar</span>
+    </button>

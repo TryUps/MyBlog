@@ -2,7 +2,7 @@
   "name": "Português (Brasil)",
   "code": "pt_BR",
   "translations":{
-    "Hello world, welcome to MyBlog %s!": "Olá mundo, bem vindo(a) ao MyBlog %s!",
+    "Hello World, welcome to MyBlog %s!": "Olá Mundo, bem vindo(a) ao MyBlog %s!",
     "Welcome back, %s.": "Bem vindo(a) de volta, %s."
   }
 }
