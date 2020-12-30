@@ -44,6 +44,7 @@
     static function check(string $jwt){
       if($jwt){
         try {
+          JWT::$leeway = 60;
           if($decoded = JWT::decode($jwt, self::$key, array('HS256'))){
             return $decoded;
           }else{

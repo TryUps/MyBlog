@@ -8,7 +8,6 @@
   Router::Router($page);
   $router = ob_get_contents();
   ob_end_clean();
-
   echo<<<HTML
     <nav class="custom-nav">
       <ul>
@@ -16,6 +15,8 @@
         <li><a href="http://">Escrita e Leitura</a></li>
         <li><a href="http://">Permalinks</a></li>
         <li><a href="http://">Segurança e Privacidade</a></li>
+        <li><a href="http://">Atualizações</a></li>
+        <li><a href="http://">Sobre o MyBlog</a></li>
       </ul>
     </nav>
     <div class="preferences">

@@ -1,4 +1,6 @@
-
+<?php
+  use MyB\Permalink as Link;
+?>
 <aside class="sidebar">
     <div class="nav-bar">
       <div class="logo">
@@ -7,12 +9,12 @@
       </div>
       <nav>
         <ul>
-          <li><a href="./" class="active"><i class="fas fa-home"></i></a></li>
-          <li><a href="./articles"><i class="far fa-newspaper"></i></a></li>
-          <li><a href="/media"><i class="fas fa-photo-video"></i></a></li>
-          <li><a href="/comments"><i class="fas fa-comments"></i></a></li>
-          <li><a href="/users"><i class="fas fa-users"></i></a></li>
-          <li><a href="./preferences"><i class="fas fa-cog"></i></a></li>
+          <li><a href="<?=Link::base('dash');?>" class="active"><i class="fas fa-home"></i></a></li>
+          <li><a href="<?=Link::base('dash','articles');?>"><i class="far fa-newspaper"></i></a></li>
+          <li><a href="<?=Link::base('dash','media');?>"><i class="fas fa-photo-video"></i></a></li>
+          <li><a href="<?=Link::base('dash','comments');?>"><i class="fas fa-comments"></i></a></li>
+          <li><a href="<?=Link::base('dash','users');?>"><i class="fas fa-users"></i></a></li>
+          <li><a href="<?=Link::base('dash','preferences');?>"><i class="fas fa-cog"></i></a></li>
         </ul>
         <ul>
           <li><a href="http://"><i class="fas fa-sign-out-alt"></i></a></li>
@@ -23,6 +25,8 @@
       if(defined("sidebar") && sidebar === false){
         
       }else{
+        $createArticle = Link::base('dash','articles','create');
+        $editArticle = Link::base('dash','articles','edit',1);
         echo<<<HTML
           <div class="nav-container">
             <header>
@@ -57,7 +61,7 @@
                 </div>
               </div>
               <div class="last-content content">
-                <a class="ico-btn" href="./articles/create">
+                <a class="ico-btn" href="{$createArticle}">
                   <i class="fas fa-pen"></i>
                   <span>Escrever novo artigo</span>
                 </a>

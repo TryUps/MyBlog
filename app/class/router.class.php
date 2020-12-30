@@ -2,6 +2,7 @@
 
 namespace MyB;
 use MyB\Error as Error;
+use MyB\Permalink as Link;
 use ReflectionMethod;
 
 class Router {

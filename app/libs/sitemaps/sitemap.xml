@@ -12,6 +12,6 @@
 		<loc language=""><![CDATA[http://filmes.site/2020/12/09/hello-world/]]></loc>
 		<lastmod><![CDATA[2020-12-26T13:39:46+00:00]]></lastmod>
 		<changefreq><![CDATA[weekly]]></changefreq><!-- (always|hourly|daily|weekly|monthly|yearly|never) -->
-		<priority><![CDATA[0.5]]></priority> <!-- 0.5 to 1.0 -->
+		<priority><![CDATA[0.5]]></priority> <!-- 0.5 to 1.0 and 0.8 -->
 	</url>
 </urlset>

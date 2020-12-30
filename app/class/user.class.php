@@ -188,11 +188,9 @@ class User {
       ];
       if($jwt = JWT::token($token)){
         if($jwtDecoded = self::checkLogin($jwt)){
-          if(isset($_COOKIE['toke'], $_COOKIE['myb__user_id'])){
-            unset($_COOKIE['toke'], $_COOKIE['myb__user_id']);
-          }
-          setcookie("token", $jwt, $expiration_time, './',$issuer, false, false);
-          setcookie("myb__user_id", $jwtDecoded->data->id, $expiration_time, './', $issuer, false, false);
+          self::logout();
+          setcookie("token", $jwt, $expiration_time, '',$issuer, false, false);
+          setcookie("myb__user_id", $jwtDecoded->data->id, $expiration_time, '', $issuer, false, false);
           return true; 
         }
         return false;
@@ -236,11 +234,11 @@ class User {
 
       $rank = 0;
 
-      $verifyUser = "SELECT user FROM `users` WHERE user = '$user' LIMIT 0,1";
+      $verifyUser = "SELECT user FROM `users` WHERE user = '$user' LIMIT 1";
       $verifyUser = self::$db->query($verifyUser);
       $verifyUser = $verifyUser->rowCount();
       if($verifyUser === 0){
-        $verifyEmail = "SELECT email FROM `users` WHERE email = '$email' LIMIT 0,1";
+        $verifyEmail = "SELECT email FROM `users` WHERE email = '$email' LIMIT 1";
         $verifyEmail = self::$db->query($verifyEmail);
         $verifyEmail = $verifyEmail->rowCount();
         if($verifyEmail === 0){
@@ -300,6 +298,28 @@ class User {
       return false;
     }
 
+    static function regenerate_session(){
+      return;
+    }
+
+    static function logout(): bool
+    {
+      if(self::cookie_destroy('token') && self::cookie_destroy('myb__user_id')){
+        return true;
+      }
+      return false;
+    }
+
+    static function cookie_destroy($key, $path = '', $domain = '', $secure = false){
+      if (array_key_exists($key, $_COOKIE)) {
+        if (false === setcookie($key, null, -1, $path, $_SERVER['SERVER_NAME'], $secure, false)) {
+          return false;
+        }
+        unset($_COOKIE[$key]);
+      }
+      return true;
+    }
+
     static private function checkLogin($jwt){
       if($jwt = JWT::check($jwt)){
         return $jwt;
@@ -315,18 +335,10 @@ class User {
           $user = $user->data;
           return $user;
         }else{
-          return json::message([
-            "type" => "user.expired.session",
-            "msg" => "Your session was expired.",
-            "status" => 400
-          ]);
+          return false;
         }
       }else{
-        return json::message([
-          "type" => "user.expired.session",
-          "msg" => "Your session was expired.",
-          "status" => 400
-        ]);
+        return false;
       }
     }
 
