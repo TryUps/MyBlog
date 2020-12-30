@@ -1,5 +1,6 @@
 # Googlebot
 User-agent: *
+Sitemap: http://www.example.com/sitemap.xml
 Allow: /
 Allow: /?page=*
 Allow: /search?q=*
@@ -7,5 +8,3 @@ Disallow: /dash/
 Disallow: /static/
 Disallow: /author/
 Disallow: /about
-
-Sitemap: http://www.example.com/sitemap.xml

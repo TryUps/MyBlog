@@ -14,9 +14,14 @@ class Json {
     return exit($msg);
   }
 
-  public static function create(){}
+  public static function create($file, Array $content = []){
 
-  public static function update(){}
+  }
+
+  public static function update($file, Array $content = []){
+    $file = file_get_contents($file);
+    $file = json_decode($file, true);
+  }
 
   public static function delete(){}
 }

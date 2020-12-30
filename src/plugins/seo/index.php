@@ -2,7 +2,7 @@
 use MyB\Plugin as Plugin;
 
 if(!Plugin::Exists('myb.plugin.seo')){
-  Plugin::Create('myb.plugin.seo');
+  Plugin::Create('package.json');
 }
 
 if(Plugin::Get('myb.plugin.seo')){

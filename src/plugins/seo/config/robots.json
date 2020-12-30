@@ -1,0 +1,9 @@
+{
+  "robots": {
+    "*": {
+      "Sitemap": "",
+      "Allow": "",
+      "Disallow": ""
+    }
+  }
+}
