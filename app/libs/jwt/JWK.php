@@ -40,7 +40,7 @@ class JWK
             throw new UnexpectedValueException('"keys" member must exist in the JWK Set');
         }
         if (empty($jwks['keys'])) {
-            throw new InvalidArgumentException('JWK Set did not contain any keys');
+            throw new \InvalidArgumentException('JWK Set did not contain any keys');
         }
 
         foreach ($jwks['keys'] as $k => $v) {
@@ -73,7 +73,7 @@ class JWK
     private static function parseKey(array $jwk)
     {
         if (empty($jwk)) {
-            throw new InvalidArgumentException('JWK must not be empty');
+            throw new \InvalidArgumentException('JWK must not be empty');
         }
         if (!isset($jwk['kty'])) {
             throw new UnexpectedValueException('JWK must contain a "kty" parameter');

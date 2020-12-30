@@ -1,4 +1,6 @@
 {
   "name": "myb.plugin.seo",
-  "productName": "MyBlog: SEO"
+  "productName": "MyBlog: SEO",
+  "version": "1.0",
+  "type": "plugin"
 }
