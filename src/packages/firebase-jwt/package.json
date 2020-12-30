@@ -1,0 +1,7 @@
+{
+  "name": "jwt",
+  "productName": "Firebase JWT",
+  "package": "firebase.jwt",
+  "author": "Neuman Vong",
+  "license": "BSD3"
+}
