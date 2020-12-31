@@ -6,13 +6,13 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   z-index: 1;
-  visibility: hidden;
+  visibility: visible;
 }
 
 .modal {
   position: fixed;
   display: flex;
-  visibility: hidden;
+  visibility: visible;
   flex-direction: column;
   justify-content: space-between;
   background-color: #fff;
@@ -32,7 +32,7 @@
   }
 
   header {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -56,9 +56,45 @@
     }
   }
 
+  nav {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    ul {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      li {
+        list-style: none;
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: row;
+          width: 150px;
+          height: 30px;
+          font-weight: bold;
+          color: #1a1a1a;
+          text-decoration: none;
+          outline: none;
+          border: none;
+
+          &:hover {
+            background-color: #f2f2f2;
+          }
+
+          &.active {
+            background-color: #eee;
+          }
+        }
+      }
+    }
+  }
+
   .modal-content {
     position: relative;
     display: flex;
+    background: #eee;
     flex-direction: column;
     flex: 1;
     padding: 20px;
@@ -70,8 +106,8 @@
       content: "";
       position: relative;
       display: flex;
-      height: 50px;
-      width: 100%;
+      //height: 50px;
+      //width: 100%;
     }
 
     .grid {

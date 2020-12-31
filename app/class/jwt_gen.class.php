@@ -1,11 +1,13 @@
 <?php
   namespace MyB;
   use MyB\DB as DB;
-  require_once __DIR__ . '/../libs/jwt/BeforeValidException.php';
-  require_once __DIR__ . '/../libs/jwt/ExpiredException.php';
-  require_once __DIR__ . '/../libs/jwt/SignatureInvalidException.php';
-  require_once __DIR__ . '/../libs/jwt/JWT.php';
   use \FIREBASE\JWT\JWT as JWT;
+  if(is_dir(__DIR__ . "/../../src/packages/firebase-jwt/")){
+    require_once __DIR__ . '/../../src/packages/firebase-jwt/BeforeValidException.php';
+    require_once __DIR__ . '/../../src/packages/firebase-jwt/ExpiredException.php';
+    require_once __DIR__ . '/../../src/packages/firebase-jwt/SignatureInvalidException.php';
+    require_once __DIR__ . '/../../src/packages/firebase-jwt/JWT.php';
+  }
 
   class JWT_GEN {
     private static $key;

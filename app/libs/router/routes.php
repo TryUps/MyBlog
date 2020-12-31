@@ -1,10 +1,11 @@
 <?php
   use MyB\Router as Router;
+  use MyB\User as User;
   use MyB\Template as Template;
   use MyB\View as View;
 
   Router::get('/install', function(){
-    require_once(dirname(__FILE__) . '/../../core/install/index.php');
+    //require_once(dirname(__FILE__) . '/../../core/install/index.php');
   });
 
   Router::get("/(?'dash'signin|signup|signout)", function($req, $res){
@@ -32,9 +33,11 @@
     return call_user_func_array($page, array($req,$res));
   });
 
-  Router::post('/dash/preferences', "MyB\Services\Preferences::Save");
-
-  Router::post('/dash/articles/create', "MyB\Services\Articles\ArticleService::Create");
+  if(User::session()){
+    // secure routes.
+    Router::post('/dash/preferences', "MyB\Services\Preferences::Save");
+    Router::post('/dash/articles/create', "MyB\Services\Articles\ArticleService::Create");
+  }
 
 
   Router::get('/go/:code', function($req, $res){

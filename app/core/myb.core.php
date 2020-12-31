@@ -34,7 +34,7 @@
 
   require_once __DIR__ . '/../libs/lang/lang.config.php';
 
-  require_once __DIR__ . '/../libs/jwt/generate.php';
+  require_once __DIR__ . '/generate-jwt-key.php';
 
   require_once __DIR__ . '/../libs/theme/theme.php';
 
