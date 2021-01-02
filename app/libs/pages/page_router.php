@@ -8,13 +8,9 @@
   $action = $_REQUEST['action'];
   $params = $req['params'];
 
-  switch($action){
-    default:
-      return new Blog([
-        "db" => DB::init(),
-        "template" => $_REQUEST['template'],
-        "action" => $_REQUEST['action'],
-        "params" => $req['params']
-      ]);
-    break;
-  }
+  return new Blog([
+    "db" => DB::init(),
+    "template" => $_REQUEST['template'],
+    "action" => $_REQUEST['action'],
+    "params" => $req['params']
+  ]);

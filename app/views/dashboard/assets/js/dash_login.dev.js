@@ -11,18 +11,20 @@ var submitForm = function submitForm(e) {
     }).then(function (res) {
       return res.json();
     })["catch"](function (error) {
-      return console.error(error.msg);
+      return console.error(error);
     });
   };
 
   login(data).then(function (login) {
+    console.log(login);
+
     if (login) {
       setTimeout(function () {
         return window.location.href = './dash/';
-      }, 500);
+      }, 300);
     }
   });
 };
 
-var loginform = document.querySelector(".myb__loginform");
+var loginform = document.querySelector("#myb__login_form");
 loginform.addEventListener("submit", submitForm);

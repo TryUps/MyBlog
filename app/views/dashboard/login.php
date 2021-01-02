@@ -7,53 +7,52 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="nofollow, noindex">
   <meta http-equiv="x-dns-prefetch-control" content="on">
+  <base href="<?=\MyB\Permalink::base();?>">
   <link rel="dns-prefetch" href="//ajax.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com"> 
   <link rel="preconnect" href="https://cdnjs.cloudflare.com">
   <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="preconnect" href="https://www.google-analytics.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;700;900&display=swap">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
   <link rel="stylesheet" href="./dash/assets/css/reset.css">
-  <link rel="stylesheet" href="./dash/assets/css/login.css">
+  <link rel="stylesheet" href="./dash/assets/css/login.v2.css">
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body>
-  <main class="loginpage">
-    <section class="loginbox">
+<body id="myb_signin">
+  <main class="signin_page">
+    <section class="box">
       <div class="box-header">
-        <h1>MyBlog</h1>
-        <h3>Signin</h3>
+        <a class="logo" href="https://tryups.github.io/myblog/" title="MyBlog Official Website">
+          <img src="./dash/assets/images/Logo@2x.png" alt="MyBlog Logo" id="MyBlog">
+        </a>
+        <div class="divider"></div>
+        <h1 class="title">Sign In</h1>
       </div>
-      <form method="POST" class="myb__loginform">
-        <div class="user_email">
-          <input type="text" name="user" id="user" required>
-          <label for="user" class="for-small">
-            Email address
-            <small>Or your username</small>
-          </label>
-        </div>
-        <div class="user_pass">
-          <input type="password" name="pass" id="pass" required>
-          <label for="pass">
-            Password
-          </label>
-        </div>
-        <div>
-          <input type="hidden" name="go" value="<?=(isset($_GET['go']) ? $_GET['go'] : null)?>">
-        </div>
-        <button type="submit" class="ico-btn" id="signin">
-          <i class="fas fa-sign-in-alt"></i>
-          <span>Sign In</span>
-        </button>
-      </form>
-    </section>
-    <section class="register">
-      <div class="box-header">
-        <h1>Or continue with...</h1>
+      <div class="box-content">
+        <form action="<?=\MyB\Permalink::base('signin');?>" id="myb__login_form" method="POST">
+          <div class="area">
+            <i class="far fa-envelope"></i>
+            <input type="text" name="user" id="myb_email" placeholder="email" required>
+            <label for="myb_email">Email</label>
+          </div>
+          <div class="area last">
+            <i class="fas fa-key"></i>
+            <input type="password" name="pass" id="myb_password" placeholder="email" required>
+            <label for="myb_password">Password</label>
+          </div>
+          <div class="checkbox">
+            <input type="checkbox" name="" id="session_check">
+            <label for="session_check">Manter sessão iniciada neste dispositivo.</label>
+          </div>
+          <button type="submit" class="submit">
+            <span>Sign in...</span>
+          </button>
+        </form>
       </div>
     </section>
   </main>

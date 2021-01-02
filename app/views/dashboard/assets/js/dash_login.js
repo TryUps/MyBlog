@@ -10,14 +10,15 @@ const submitForm = (e) => {
     body: data
   })
   .then(res => res.json())
-  .catch(error => console.error(error.msg))
+  .catch(error => console.error(error))
 
   login(data).then(login => {
+    console.log(login);
     if(login){
-      setTimeout(() => window.location.href = './dash/', 500)
+      setTimeout(() => window.location.href = './dash/', 300)
     }
   });
 }
 
-const loginform = document.querySelector(".myb__loginform");
+const loginform = document.querySelector("#myb__login_form");
 loginform.addEventListener("submit", submitForm);

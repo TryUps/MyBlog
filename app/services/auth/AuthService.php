@@ -3,7 +3,7 @@
   use MyB\User as User;
   use MyB\Json as Json;
 
-  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Origin: " . \MyB\Permalink::base());
   header("Content-Type: application/json; charset=UTF-8");
   header("Access-Control-Allow-Methods: POST");
   header("Access-Control-Max-Age: 3600");
@@ -18,12 +18,17 @@
       if(isset($_POST['user']) || isset($_POST['pass']) || !empty($_POST['user']) || !empty($_POST['pass'])){
         $user = $_POST['user'];
         $pass = $_POST['pass'];
-        return User::login([
-          "user" => $user,
-          "pass" => $pass
-        ]);
+        if(User::login(["user" => $user, "pass" => $pass])){
+          $user = User::session();
+          return exit(json_encode($user));
+        }
+        return '';
       }else if(isset($data['user']) || isset($data['pass']) || !empty($data['user']) || !empty($data['pass'])){
-        return User::login($data);
+        if(User::login($data)){
+          $user = User::session();
+          return exit(json_encode($user));
+        }
+        return '';
       }else{
         return Json::message([
           "type" => "Error",
