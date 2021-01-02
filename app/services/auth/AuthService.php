@@ -10,7 +10,7 @@
   header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
   class AuthService {
-    public static function Login(): string
+    public static function Login()
     {
       $jsonData = file_get_contents('php://input');
       $data = json_decode($jsonData, true);
@@ -18,17 +18,16 @@
       if(isset($_POST['user']) || isset($_POST['pass']) || !empty($_POST['user']) || !empty($_POST['pass'])){
         $user = $_POST['user'];
         $pass = $_POST['pass'];
-        if(User::login(["user" => $user, "pass" => $pass])){
+        $session = isset($_POST['session_check']) ? $_POST['session_check'] : false;
+        if(User::login(["user" => $user, "pass" => $pass, "session" => $session])){
           $user = User::session();
           return exit(json_encode($user));
         }
-        return '';
       }else if(isset($data['user']) || isset($data['pass']) || !empty($data['user']) || !empty($data['pass'])){
         if(User::login($data)){
           $user = User::session();
           return exit(json_encode($user));
         }
-        return '';
       }else{
         return Json::message([
           "type" => "Error",

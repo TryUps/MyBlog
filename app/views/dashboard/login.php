@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-  <title>Login – MyBlog</title>
+  <title>Sign in – MyBlog Dashboard</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="robots" content="nofollow, noindex">
   <meta http-equiv="x-dns-prefetch-control" content="on">
@@ -42,11 +42,11 @@
           </div>
           <div class="area last">
             <i class="fas fa-key"></i>
-            <input type="password" name="pass" id="myb_password" placeholder="email" required>
+            <input type="password" name="pass" id="myb_password" placeholder="email" minlength="6" required>
             <label for="myb_password">Password</label>
           </div>
           <div class="checkbox">
-            <input type="checkbox" name="" id="session_check">
+            <input type="checkbox" name="session_check" id="session_check" value="true">
             <label for="session_check">Manter sessão iniciada neste dispositivo.</label>
           </div>
           <button type="submit" class="submit">
@@ -56,6 +56,6 @@
       </div>
     </section>
   </main>
-  <script src="./dash/assets/js/dash_login.js"></script>
+  <script src="./dash/assets/js/dash_login.js" async></script>
 </body>
 </html>

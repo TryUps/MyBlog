@@ -13,13 +13,20 @@ main {
   align-items: center;
   justify-content: center;
 
+  &.non-centered {
+    margin-top: 10%;
+    margin-bottom: 50px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   .box {
     display: flex;
     flex-direction: column;
     background-color: #fff;
     border-radius: 20px;
-    width: 360px;
-    height: 420px;
+    width: 420px;
+    height: auto;
     box-shadow: 0px 1px 20px rgba(0, 0, 0, 0.25);
 
     .box-header {
@@ -67,15 +74,36 @@ main {
         margin-bottom: 30px;
         margin-top: 20px;
 
-        &.last {
-          margin-bottom: 20px !important;
+        &.area-2 {
+          flex-direction: row;
         }
-        
-        input[type='text'], input[type='password'] {
+
+        .sub-area {
           position: relative;
+          flex: 1;
+          flex-direction: row;
+          margin-right: 10px;
+
+          &:last-of-type {
+            margin-right: -1px;
+          }
+        }
+
+        label {
+          color: #0A0C45;
+          font-weight: 400;
+          font-size: 0.95rem;
+          text-transform: uppercase;
+          margin-left: 10px;
+        }
+
+        input[type='text'], input[type='password'], input[type='email'] {
+          position: relative;
+          width: 100%;
           border: 1px solid #eee;
           border-radius: 20px;
-          padding: 8px 10px 8px 55px;
+          padding: 8px 10px 8px 10px;
+          margin: 0;
           transition: all .3s, color .5s;
 
           &:focus, &:not(:placeholder-shown) {
@@ -87,7 +115,7 @@ main {
             display: flex;
             font-size: 0.9rem;
             top: 15px;
-            left: 55px;
+            left: 15px;
             transition: all .3s, color 1s;
             touch-action: manipulation;
             color: #777;
@@ -109,73 +137,6 @@ main {
           &:valid {
             background-color: rgba(0, 0, 0, 0.1);
           }
-        }
-
-        i {
-          position: absolute;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 5;
-          width: 45px;
-          height: 43px;
-          border-radius: 20px 0 0 20px;
-          color: #777;
-          background: #eee;
-          transition: all .5, color 1s;
-
-          &.colored {
-            background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-            color: #fff;
-          }
-        }
-      }
-
-      .checkbox {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        font-size: 0.9rem;
-        margin-bottom: 20px;
-
-        input[type='checkbox'] {
-          margin-right: 10px;
-        }
-
-        label {
-          cursor: pointer;
-        }
-      }
-
-      button.submit {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 45px;
-        border-radius: 20px;
-        background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-        cursor: pointer;
-        background-size: 400px 500px;
-        background-position: top left;
-        transition: all .5s, color 1s;
-
-        &:hover {
-          background-position: bottom right;
-          color: #fff;
-        }
-
-        i {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.5);
-          margin-right: 20px;
-          margin-left: 20px;
-          width: 30px;
-          height: 30px;
         }
       }
     }

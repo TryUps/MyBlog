@@ -95,6 +95,9 @@ main .box .box-content .area input[type=text]:not(:placeholder-shown) + label, m
   font-size: 0.95rem;
   text-transform: uppercase;
 }
+main .box .box-content .area input[type=text]:valid, main .box .box-content .area input[type=password]:valid {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 main .box .box-content .area i {
   position: absolute;
   display: flex;
@@ -104,7 +107,13 @@ main .box .box-content .area i {
   width: 45px;
   height: 43px;
   border-radius: 20px 0 0 20px;
+  color: #777;
   background: #eee;
+  transition: all 0.5, color 1s;
+}
+main .box .box-content .area i.colored {
+  background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  color: #fff;
 }
 main .box .box-content .checkbox {
   display: flex;

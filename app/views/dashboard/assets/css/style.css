@@ -932,6 +932,7 @@ button.ico-btn span, a.ico-btn span {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  overflow-y: auto;
   margin-top: 20px;
   padding: 0 30px;
 }

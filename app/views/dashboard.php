@@ -26,7 +26,7 @@ class Dashboard {
     if($user = User::session()){
       require_once __DIR__ . '/dashboard/index.php';
     }else{
-      return Link::go('/signin');
+      return Link::go('/signin?go=/dash/');
     }
     
   }
@@ -34,7 +34,7 @@ class Dashboard {
     if($user = User::session()){
       require_once __DIR__ . '/dashboard/logout.php';
     }else{
-      return Link::go('/signin');
+      return Link::go('/signin?go=/dash/');
     }
   }
   public static function Assets($req, $res){

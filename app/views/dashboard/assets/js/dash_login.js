@@ -1,6 +1,19 @@
 
 
 
+const inputs = document.querySelectorAll('input[type=text], input[type=password]');
+for(let input of inputs){
+  input.addEventListener('keyup', (e) => {
+    let valid = e.target.checkValidity();
+    let icon = e.target.parentElement.querySelector('i');
+    if(valid){
+      icon.classList.add('colored')
+    }else{
+      icon.classList.remove('colored');
+    }
+  });
+}
+
 const submitForm = (e) => {
   e.preventDefault();
   let data = new FormData(e.target);
@@ -15,7 +28,7 @@ const submitForm = (e) => {
   login(data).then(login => {
     console.log(login);
     if(login){
-      setTimeout(() => window.location.href = './dash/', 300)
+      setTimeout(() => window.location.href = './dash/', 2000)
     }
   });
 }
