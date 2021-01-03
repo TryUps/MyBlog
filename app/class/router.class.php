@@ -22,6 +22,10 @@ class Router {
 		return self::$url;
 	}
 
+	public static function route($route = '/', $data = null, $method = array(), $action = null) {
+		return self::create($route, $data, $method, $action);
+	}
+
 	public static function get($route = '/', $data = null, $action = null) {
 		return self::create($route, $data, 'GET', $action);
 	}

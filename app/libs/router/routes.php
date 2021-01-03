@@ -21,6 +21,12 @@
 
   Router::post('/signup', "MyB\Services\Auth\AuthService::Register");
 
+  Router::route("/api(?<api>.*?)", function($req, $res){
+    $params = $req['params']['api'];
+    require_once __DIR__ . '/../api/index.php';
+    return;
+  }, ['GET','POST','PUT','DELETE','PATCH','OPTIONS','HEAD']);
+
   Router::get("/(?'dash'(dash|dash\/|dash/(?<action>assets)/(?<file>(.*?)))|dash/(?'page'.*))", function($req, $res){
     $params = $req['params'];
     $link = explode('/',$params[0]);

@@ -31,8 +31,8 @@ class Posts {
     $post = [
       "author" => 2, //User::session()->id,
       "title" => $title,
-      "date" => gmdate('Y-m-d H:i:s', $date),
-      "modify_date" => gmdate("Y-m-d H:i:s", $date),
+      "date" => date('Y-m-d H:i:s', $date),
+      "updated" => date("Y-m-d H:i:s", $date),
       "summary" => $summary,
       "content" => $content,
       "term" => $post_term,
