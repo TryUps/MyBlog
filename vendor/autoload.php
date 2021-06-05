@@ -15,9 +15,14 @@
 
 function autoload(string $class): void
 {
-  $file = file_path($class);
+  try {
 
-  load_file($file);
+    $file = file_path($class);
+    load_file($file);
+
+  }catch(Exception $e){
+    exit($e->getMessage());
+  }
 }
 
 
@@ -40,8 +45,8 @@ function file_path($file): string
 
 function load_file($file): void
 {
-  if (!file_exists($file) || !empty(file_get_contents($file))) {
-    throw new Exception("Error Processing Request", 1);
+  if (!file_exists($file) || empty(file_get_contents($file))) {
+    throw new Exception("Error loading the class: $file", 500);
     return;
   }
 

@@ -10,7 +10,6 @@ class Router extends Request
 {
   protected static $routes = array();
   protected static $errors = array();
-  protected static $url = 'http://localhost';
 
   public static function init(): void
   {
@@ -18,7 +17,7 @@ class Router extends Request
       return;
     }
 
-    
+    parent::init();
   }
 
   public static function clean(): bool
@@ -79,10 +78,11 @@ class Router extends Request
   {
 
     if (empty(self::$routes)) {
-      throw new Exception("Error Processing Request", 1);
+      throw new Exception("Error Processing Request, no route found.", 404);
     }
 
     foreach (self::$routes as $route) {
+
     }
   }
 

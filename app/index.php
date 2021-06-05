@@ -3,10 +3,7 @@
  *  App Index
  */
 
-  use \MyBlog\Http\Request;
-  use \MyBlog\Http\Router;
-
-  Request::generateRequestInfo();
+  use MyBlog\Http\Router;
 
   Router::init();
 
