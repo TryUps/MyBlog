@@ -34,9 +34,10 @@ class Cache
     $url .= !empty($queryParams) ? '?' . http_build_query($queryParams) : '';
     
     if(empty(ltrim($url, '/'))){
-      return 'cache-home.cache';
+      return 'cache-' . md5('home') . '.cache';
     }
-    return 'cache-' . preg_replace('/[^0-9a-zA-Z]/','-', ltrim($url, '/')) . '.cache';
+
+    return 'cache-' . md5(preg_replace('/[^0-9a-zA-Z]/','-', ltrim($url, '/'))) . '.cache';
   }
 
   public function handle($request, $next)
