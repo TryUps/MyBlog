@@ -76,12 +76,17 @@ class Request
 
   public static function setParams($params): void
   {
+    $params = array_map(function($value){
+      return filter_var($value, FILTER_SANITIZE_STRING);
+    }, $params);
+    
     self::$params = $params;
   }
 
   private static function getQueryParams(): void
   {
-    $queryParams = array_map(function($key, $value){
+
+    $queryParams = array_map(function($value){
       return filter_var($value, FILTER_SANITIZE_STRING);
     }, $_GET);
 
@@ -90,7 +95,7 @@ class Request
 
   private static function getPostVars(): void
   {
-    $postVars = array_map(function($key, $value){
+    $postVars = array_map(function($value){
       return filter_var($value, FILTER_SANITIZE_STRING);
     }, $_POST);
     
