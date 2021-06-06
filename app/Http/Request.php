@@ -10,20 +10,19 @@ class Request
 
   public static $method;
 
-  public static $params;
+  public static $params = array();
 
-  public static $queryParams;
+  public static $queryParams = array();
 
-  public static $postVars;
+  public static $postVars = array();
 
-  public static $headers;
+  public static $headers = array();
 
   public static function init()
   {
     self::getUrl();
     self::getActualRoute();
     self::getMethod();
-    self::getParams();
     self::getQueryParams();
     self::getPostVars();
     self::getRequestHeaders();
@@ -75,14 +74,9 @@ class Request
     self::$method = $method;
   }
 
-  public static function setParams(): void
+  public static function setParams($params): void
   {
-
-  }
-
-  private static function getParams(): void
-  {
-
+    self::$params = $params;
   }
 
   private static function getQueryParams(): void

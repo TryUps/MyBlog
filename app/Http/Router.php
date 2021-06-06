@@ -53,6 +53,16 @@ class Router extends Request
     return self::create($route, $data, 'PATCH');
   }
 
+  public static function error(Int $code, Closure $callback)
+  {
+    $error = array(
+      "code" => $code,
+      "callback" => $callback
+    );
+
+    array_push(self::$errors, $error);
+  }
+
   private static function create(string $route, Closure $data, $method, $params = array()): bool
   {
     if (self::exists($route, $method)) {
@@ -117,78 +127,60 @@ class Router extends Request
 
           if (strtolower(Request::$method) === strtolower($allowedMethod)) {
 
-
-
-            $response = [];
-
             if (!is_callable($route['callback'])) {
-
               throw new Exception("Error processing request", 500);
-            } else {
-
-              $work['method'] = true;
-
-              $args = [];
-
-              $params = $params[0];
-
-              array_shift($params);
-
-              Request::setParams($params);
-
-              $reflection = new ReflectionFunction($route['callback']);
-              foreach ($reflection->getParameters() as $parameter) {
-                $name = $parameter->getName();
-                $args[$name] = $params[$name] ?? '';
-              }
-
-              return (new MiddlewareQueue($route['callback'], $args, $route['middlewares']))->next(Request::class);
             }
+
+            $work['method'] = true;
+
+            $args = [];
+            $params = $params[0];
+            array_shift($params);
+
+            Request::setParams($params);
+
+            $reflection = new ReflectionFunction($route['callback']);
+            foreach ($reflection->getParameters() as $parameter) {
+              $name = $parameter->getName();
+              $args[$name] = $params[$name] ?? '';
+            }
+
+            return (new MiddlewareQueue($route['callback'], $args, $route['middlewares']))->next(Request::class);
+            
           }
         }
       }
     }
 
     if (!$work['route']) {
-      http_response_code(404);
-      return self::getError(404);
+
+      throw new Exception('Page not found.', 404);
     } elseif (!$work['method']) {
-      http_response_code(405);
-      return self::getError(405);
+
+      throw new Exception('Invalid method', 405);
     }
   }
 
-  public static function error(Int $code, \Closure $callback)
+  public static function getError($e)
   {
-    $error = array(
-      "code" => $code,
-      "callback" => $callback
-    );
-
-    array_push(self::$errors, $error);
-  }
-
-  public static function getError($code)
-  {
-    $work['error'] = false;
     foreach (self::$errors as $error) {
-      if ($error['code'] === $code) {
+      if ($error['code'] === $e->getCode()) {
         $work['error'] = true;
         return call_user_func($error['callback']);
       }
     }
 
-    if (!$work['error']) {
-      return exit("Fatal error, check your routes!");
-    }
+    return new Response($e->getCode(), $e->getMessage());
   }
 
   public static function run()
   {
     try {
+
       return self::generateResponse();
     } catch (Exception $e) {
-      echo $e->getMessage();
+
+      return self::getError($e);
     }
   }
 }

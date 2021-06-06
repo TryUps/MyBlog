@@ -9,9 +9,11 @@
   Router::init();
 
   Router::get('/', function(){
-    return new Response(function(){
-      echo 'aa';
-    });
+    return new Response(200, 'aaaa');
   });
 
-  Router::run();
+  Router::error(404, function(){
+    return new Response(404, 'Error not found in this webpage.');
+  });
+
+  Router::run()->sendResponse();
