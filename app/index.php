@@ -4,7 +4,14 @@
  */
 
   use MyBlog\Http\Router;
+  use MyBlog\Http\Response;
 
   Router::init();
 
-  Router::sendResponse();
+  Router::get('/', function(){
+    return new Response(function(){
+      echo 'aa';
+    });
+  });
+
+  Router::run();
