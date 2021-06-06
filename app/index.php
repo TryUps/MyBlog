@@ -15,7 +15,6 @@
   Queue::setDefault([
     "cache"
   ]);
-  
 
   Router::init();
 
@@ -23,9 +22,12 @@
     return new Response(200, 'aaaa');
   });
 
+  Router::post('/', function(){
+    return new Response(200, 'postman');
+  });
 
-  Router::get('/page', function(){
-    return new Response(200, 'aaaacdc');
+  Router::get('/page', function($id){
+    return new Response(200, 'aaaacdc' . $id);
   });
 
   Router::get('/id/:id/edit/:letter', function(){

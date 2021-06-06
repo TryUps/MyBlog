@@ -46,7 +46,6 @@ class Request
   private static function getActualRoute(): void
   {
     $url = filter_input(INPUT_SERVER, 'SCRIPT_NAME', FILTER_SANITIZE_URL);
-
     $url = rtrim(dirname($url), '/');
     $url = trim(str_replace($url, '', filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL)), '');
     $url = urldecode($url);

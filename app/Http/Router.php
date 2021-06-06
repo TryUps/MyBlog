@@ -63,7 +63,7 @@ class Router extends Request
     array_push(self::$errors, $error);
   }
 
-  private static function create(string $route, Closure $data, $method, $params = array()): bool
+  private static function create(string $route, Closure $data, $method, $middlewares = [], $params = array()): bool
   {
     if (self::exists($route, $method)) {
       throw new Exception("Unable to create route, duplicate route.", 400);
@@ -119,13 +119,13 @@ class Router extends Request
 
       $patternRoute = '@^' . $realRoute . '$@i';
 
-      if (preg_match_all($patternRoute, Request::$route, $params, PREG_SET_ORDER)) {
+      if (preg_match_all($patternRoute, parent::$route, $params, PREG_SET_ORDER)) {
 
         $work['route'] = true;
 
         foreach ((array)$route['method'] as $allowedMethod) {
 
-          if (strtolower(Request::$method) === strtolower($allowedMethod)) {
+          if (strtolower(parent::$method) === strtolower($allowedMethod)) {
 
             if (!is_callable($route['callback'])) {
               throw new Exception("Error processing request", 500);
@@ -148,6 +148,7 @@ class Router extends Request
             return (new MiddlewareQueue($route['callback'], $args, $route['middlewares']))->next(Request::class);
             
           }
+          
         }
       }
     }
@@ -178,6 +179,7 @@ class Router extends Request
     try {
 
       return self::generateResponse();
+
     } catch (Exception $e) {
 
       return self::getError($e);

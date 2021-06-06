@@ -56,7 +56,7 @@ class Response
         $httpText = "Not Found!";
         break;
       case 405:
-        $httpText = "Method Not Allowed";
+        $httpText = "Method Not Allowed!";
         break;
       case 500:
         $httpText = "Internal Server Error!";
