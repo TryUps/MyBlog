@@ -9,20 +9,15 @@ class Cache
   private function isCacheable($request): bool
   { 
     $CacheTime = 10;
-    if($CacheTime <= 0){
-      return false;
-    }
+    if($CacheTime <= 0) return false;
 
-    if($request::$method != 'GET'){
-      return false;
-    }
+    if($request::$method != 'GET') return false;
 
     /*
     $headers = $request::$headers;
     if(isset($headers['Cache-Control']) && $headers['Cache-Control'] == 'no-cache'){
       return false;
     }*/
-
     return true;
   }
 
@@ -33,9 +28,7 @@ class Cache
 
     $url .= !empty($queryParams) ? '?' . http_build_query($queryParams) : '';
     
-    if(empty(ltrim($url, '/'))){
-      return 'cache-' . md5('home') . '.cache';
-    }
+    if(empty(ltrim($url, '/'))) return 'cache-' . md5('home') . '.cache';
 
     return 'cache-' . md5(preg_replace('/[^0-9a-zA-Z]/','-', ltrim($url, '/'))) . '.cache';
   }
