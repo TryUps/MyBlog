@@ -88,7 +88,7 @@ class Router extends Request
     }
 
     $route = array(
-      "route" => $route,
+      "route" => str_replace('/', '\/',$route),
       "callback" => $data,
       "method" => $method,
       "middlewares" => []
@@ -117,7 +117,7 @@ class Router extends Request
 
       $realRoute = $route['route'];
 
-      $patternRoute = '@^' . $realRoute . '$@i';
+      $patternRoute = '/^' . $realRoute . '$/i';
 
       if (preg_match_all($patternRoute, parent::$route, $params, PREG_SET_ORDER)) {
 
@@ -145,10 +145,8 @@ class Router extends Request
               $args[$name] = $params[$name] ?? '';
             }
 
-            return (new MiddlewareQueue($route['callback'], $args, $route['middlewares']))->next(Request::class);
-            
+            return (new MiddlewareQueue($route['callback'], $args, $route['middlewares']))->next(Request::class); 
           }
-          
         }
       }
     }
